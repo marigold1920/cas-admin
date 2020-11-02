@@ -19,7 +19,7 @@ const request = {
 };
 
 const RequestPage = () => (
-    <section class="dashboard">
+    <section className="dashboard">
         <DashboardHeader title="Yêu cầu" />
         <Filter
             items={["Tất cả", "Thành công", "Không hoàn thành", "Bị từ chối", "Đã hủy bỏ"]}
@@ -38,7 +38,7 @@ const RequestPage = () => (
                 ]}
                 sizes={["col__13", "col__13", "col__10", "col__13", "col__10", "col__13"]}
             />
-            <div class="table__content">
+            <div className="table__content">
                 <RequestRow item={request} />
             </div>
         </CustomTable>

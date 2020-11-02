@@ -17,7 +17,7 @@ const requester = {
 };
 
 const AmbulancePage = () => (
-    <section class="dashboard">
+    <section className="dashboard">
         <DashboardHeader title="Xe cứu thương" />
         <Filter
             items={["Tất cả", "Đang hoạt động", "Đã hủy đăng ký", "Chờ xác nhận"]}
@@ -35,7 +35,7 @@ const AmbulancePage = () => (
                 ]}
                 sizes={["col__10", "col__20", "col__10", "col__15", "col__10"]}
             />
-            <div class="table__content">
+            <div className="table__content">
                 <AmbulanceRow item={requester} />
             </div>
         </CustomTable>
