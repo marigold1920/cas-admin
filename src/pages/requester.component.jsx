@@ -18,7 +18,7 @@ const requester = {
 };
 
 const RequesterPage = () => (
-    <section class="dashboard">
+    <section className="dashboard">
         <DashboardHeader title="Bệnh khách" />
         <Filter items={["Tất cả", "Đang hoạt động", "Ngưng hoạt động"]} activeItem="Tất cả" />
         <CustomTable>
@@ -34,7 +34,7 @@ const RequesterPage = () => (
                 ]}
                 sizes={["col__20", "col__10", "col__7", "col__10", "col__10", "col__10"]}
             />
-            <div class="table__content">
+            <div className="table__content">
                 <RequesterRow item={requester} />
             </div>
         </CustomTable>

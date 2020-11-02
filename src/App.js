@@ -16,20 +16,24 @@ import Navigation from "./components/navigation.component";
 import "./App.css";
 
 const App = ({ currentUser }) => (
-    <div className="index__page">
-        <Navigation />
-        <Switch>
-            <Route exact path="/" component={DashboardPage} />
-            <Route path="/requesters" component={RequesterPage} />
-            <Route path="/requests" component={RequestPage} />
-            <Route path="/drivers" component={DriverPage} />
-            <Route path="/ambulances" component={AmbulancePage} />
-            <Route
-                path="/signin"
-                render={() => (currentUser ? <Redirect to="/" /> : <LoginPage />)}
-            />
-        </Switch>
-    </div>
+    <Switch>
+        {currentUser ? (
+            <div className="index__page">
+                <Navigation />
+                <Redirect from="/" to="requesters" />
+                <Route exact path="/" component={DashboardPage} />
+                <Route path="/requesters" component={RequesterPage} />
+                <Route path="/requests" component={RequestPage} />
+                <Route path="/drivers" component={DriverPage} />
+                <Route path="/ambulances" component={AmbulancePage} />
+            </div>
+        ) : (
+            <>
+                <Redirect from="/" to="/signin" />
+                <LoginPage />
+            </>
+        )}
+    </Switch>
 );
 
 const mapStateToProps = createStructuredSelector({

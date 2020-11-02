@@ -5,7 +5,7 @@ import ApplicationName from "./application-name.component";
 import NavigationItem from "./navigation-item.component";
 
 const Navigation = () => {
-    const [activeItem, setActiveItem] = useState("Trang chủ");
+    const [activeItem, setActiveItem] = useState("Bệnh khách");
     const items = [
         { route: "/", label: "Trang chủ", icon: "fas fa-chart-line" },
         { route: "/requesters", label: "Bệnh khách", icon: "fas fa-user-injured" },
@@ -19,7 +19,12 @@ const Navigation = () => {
         <section className="vertical__navigation">
             <ApplicationName name="CAS" logo="https://i.ibb.co/9H5ngdw/logo.png" />
             {items.map(({ route, label, icon }) => (
-                <Link onClick={() => setActiveItem(label)} to={route} style={{ color: "#000" }}>
+                <Link
+                    key={route}
+                    onClick={() => setActiveItem(label)}
+                    to={route}
+                    style={{ color: "#000" }}
+                >
                     <NavigationItem label={label} icon={icon} isActive={label === activeItem} />
                 </Link>
             ))}

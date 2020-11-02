@@ -1,17 +1,22 @@
-import { takeLatest, all, call } from "redux-saga/effects";
+import { takeLatest, all, call, put } from "redux-saga/effects";
 
+import { login } from "../../apis/user.apis";
+
+import { loginSuccess, loginFail } from "./user.actions";
 import UserActionTypes from "./user.types";
 
 export function* signIn({ payload: { username, password } }) {
     try {
-        yield console.log(username, password);
+        const response = yield call(login, username, password);
+
+        yield put(loginSuccess(response.data));
     } catch (error) {
-        console.log(error);
+        yield put(loginFail(error));
     }
 }
 
 export function* onSignIn() {
-    yield takeLatest(UserActionTypes.LOGIN, signIn);
+    yield takeLatest(UserActionTypes.LOGIN_START, signIn);
 }
 
 export function* userSagas() {

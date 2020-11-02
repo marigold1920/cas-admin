@@ -1,21 +1,22 @@
 import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
-    currentUser: {
-        username: "marigold1920",
-        displayName: "Victor Nguyễn",
-        imageUrl: "https://i.ibb.co/G5x3bRr/vo-ngoc-tran.png"
-    }
+    currentUser: null,
+    error: null
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case UserActionTypes.LOGIN:
+        case UserActionTypes.LOGIN_SUCCESS:
             return {
                 ...state,
                 currentUser: action.payload
             };
-
+        case UserActionTypes.LOGIN_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            };
         default:
             return state;
     }
