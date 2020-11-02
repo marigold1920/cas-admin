@@ -14,3 +14,7 @@ export const loginFail = error => ({
     type: UserActionTypes.LOGIN_FAIL,
     payload: error
 });
+
+export const logout = () => ({
+    type: UserActionTypes.LOGOUT
+});

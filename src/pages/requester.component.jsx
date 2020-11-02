@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import { selectRequesters } from "../redux/data/data.selectors";
+import { selectCurrentData } from "../redux/data/data.selectors";
 import { selectToken } from "../redux/user/user.selectors";
-import { fetchRequesters } from "../redux/data/data.actions";
+import { fetchData } from "../redux/data/data.actions";
 
 import DashboardHeader from "../components/dashboard-header.component";
 import Filter from "../components/filter.component";
@@ -13,10 +13,10 @@ import RequesterRow from "../components/requester-row.component";
 import TableHeader from "../components/table-header.component";
 import CustomTable from "../components/custom-table.component";
 
-const RequesterPage = ({ requesters, token, fetchRequesters }) => {
+const RequesterPage = ({ requesters, token, fetchData }) => {
     useEffect(() => {
-        fetchRequesters("requesters", token);
-    }, [fetchRequesters, token]);
+        fetchData("requesters", token);
+    }, [fetchData, token]);
 
     return (
         <section className="dashboard">
@@ -37,8 +37,8 @@ const RequesterPage = ({ requesters, token, fetchRequesters }) => {
                 />
                 <div className="table__content">
                     {requesters.length > 0
-                        ? requesters.map(({ requesterId, ...otherProps }) => (
-                              <RequesterRow key={requesterId} {...otherProps} />
+                        ? requesters.map(({ userId, ...otherProps }) => (
+                              <RequesterRow key={userId} {...otherProps} />
                           ))
                         : null}
                 </div>
@@ -49,12 +49,12 @@ const RequesterPage = ({ requesters, token, fetchRequesters }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-    requesters: selectRequesters,
+    requesters: selectCurrentData,
     token: selectToken
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchRequesters: (actor, token) => dispatch(fetchRequesters(actor, token))
+    fetchData: (actor, token) => dispatch(fetchData(actor, token))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequesterPage);

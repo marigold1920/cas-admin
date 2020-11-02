@@ -301,15 +301,15 @@ a {
 }
 
 .col__10 {
-    width: 10%;
-}
-
-.col__13 {
     width: 13%;
 }
 
+.col__13 {
+    width: 15%;
+}
+
 .col__7 {
-    width: 7%;
+    width: 10%;
 }
 
 .col__20 {
@@ -317,14 +317,17 @@ a {
 }
 
 .col__15 {
-    width: 15%;
+    width: 18%;
+}
+
+.col__25 {
+    width: 25%;
 }
 
 .table__header__label,
 .table__content__col {
     font-size: 1.05rem;
     font-weight: bold;
-    margin: 0 20px;
 }
 
 .col__mix {
