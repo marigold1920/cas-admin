@@ -82,7 +82,11 @@ const DashBoardPage = ({ activeItem, data, fetchData, fetchItemDetails, token })
                     {data.length > 0
                         ? data.map(({ itemId, ...otherProps }) =>
                               activeItem === "requesters" || activeItem === "drivers" ? (
-                                  <RequesterRow key={itemId} {...otherProps} />
+                                  <RequesterRow 
+                                    action={() => fetchItemDetails(token, activeItem, itemId)}
+                                    key={itemId} 
+                                    {...otherProps} 
+                                />
                               ) : activeItem === "ambulances" ? (
                                   <AmbulanceRow key={itemId} {...otherProps} />
                               ) : activeItem === "requests" ? (
@@ -109,7 +113,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     fetchData: (actor, token) => dispatch(fetchData(actor, token)),
-    fetchItemDetails: (token, actor, itemId) => dispatch(fetchItemDetails(token, actor, itemId))
+    fetchItemDetails: (token, actor, itemId) => dispatch(fetchItemDetails(token, actor, itemId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardPage);

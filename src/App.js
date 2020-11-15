@@ -11,20 +11,26 @@ import LoginPage from "./pages/login.component";
 import DashboardPage from "./pages/dashboard.component";
 import Navigation from "./components/navigation.component";
 import RequestModal from "./components/request-modal.component";
+import RequesterModal from './components/requester-modal.component';
 import Modal from "./components/modal.component";
 
 import "./App.css";
 
 const App = ({ currentUser, currentItem, activeItem }) => {
+    const title = activeItem === 'requests' ? 'Chi tiết yêu cầu' 
+                : activeItem === 'requesters' ? 'Chi tiết bệnh khách' : '';
     return (
         <Switch>
             {currentUser ? (
                 <div className="index__page">
                     <Navigation />
                     <DashboardPage />
-                    <Modal title="Chi tiết yêu cầu" visible={!!currentItem}>
+                    <Modal title={title} visible={!!currentItem}>
                         {activeItem === "requests" && currentItem && (
                             <RequestModal item={currentItem} />
+                        )}
+                        {activeItem === "requesters" && currentItem && (
+                            <RequesterModal item={currentItem}/>
                         )}
                     </Modal>
                 </div>
