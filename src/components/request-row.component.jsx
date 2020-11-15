@@ -8,7 +8,8 @@ const RequestRow = ({
     licensePlate,
     typeRequest = "Đặt cho người khác",
     typeTransport = "Đi cấp cứu",
-    status
+    status,
+    action
 }) => (
     <div className="table__content__row">
         <span className="table__content__col col__mix col__20">
@@ -20,11 +21,11 @@ const RequestRow = ({
             <span className="name">{driverName}</span>
         </span>
         <span className="table__content__col col__7">{licensePlate}</span>
-        <span className="table__content__col col__15">{typeRequest}</span>
+        <span className="table__content__col col__13">{typeRequest}</span>
         <span className="table__content__col col__10">{typeTransport}</span>
         <span className="table__content__col col__13">{status}</span>
         <span className="table__content__action">
-            <i className="fas fa-eye"></i>
+            <i onClick={action} className="fas fa-eye"></i>
         </span>
     </div>
 );

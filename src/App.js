@@ -1,43 +1,51 @@
-import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import { selectCurrentUser } from "./redux/user/user.selectors";
+import { selectCurrentUser, selectToken } from "./redux/user/user.selectors";
+import { selectCurrentItem, selectCurrentItemId } from "./redux/data/data.selectors";
+import { selectActiveItem } from "./redux/table/table.selectors";
+import { fetchItemDetails } from "./redux/data/data.actions";
 
 import LoginPage from "./pages/login.component";
 import DashboardPage from "./pages/dashboard.component";
-import RequesterPage from "./pages/requester.component";
-import RequestPage from "./pages/request.component";
-import DriverPage from "./pages/driver.component";
-import AmbulancePage from "./pages/ambulance.component";
 import Navigation from "./components/navigation.component";
+import RequestModal from "./components/request-modal.component";
+import Modal from "./components/modal.component";
 
 import "./App.css";
 
-const App = ({ currentUser }) => (
-    <Switch>
-        {currentUser ? (
-            <div className="index__page">
-                <Navigation />
-                <Redirect from="/" to="requesters" />
-                <Route exact path="/" component={DashboardPage} />
-                <Route path="/requesters" component={RequesterPage} />
-                <Route path="/requests" component={RequestPage} />
-                <Route path="/drivers" component={DriverPage} />
-                <Route path="/ambulances" component={AmbulancePage} />
-            </div>
-        ) : (
-            <>
-                <Redirect from="/" to="/signin" />
+const App = ({ currentUser, currentItemId, currentItem, activeItem, token }) => {
+    useEffect(() => {
+        currentItemId && fetchItemDetails(token, activeItem, currentItemId);
+    }, [activeItem, currentItemId, token]);
+
+    return (
+        <Switch>
+            {currentUser ? (
+                <div className="index__page">
+                    <Navigation />
+                    <DashboardPage />
+                    <Modal title="Chi tiết yêu cầu" visible={!!currentItem}>
+                        {activeItem === "requests" && currentItem && (
+                            <RequestModal item={currentItem} />
+                        )}
+                    </Modal>
+                </div>
+            ) : (
                 <LoginPage />
-            </>
-        )}
-    </Switch>
-);
+            )}
+        </Switch>
+    );
+};
 
 const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser
+    currentUser: selectCurrentUser,
+    currentItemId: selectCurrentItemId,
+    currentItem: selectCurrentItem,
+    activeItem: selectActiveItem,
+    token: selectToken
 });
 
 export default connect(mapStateToProps)(App);

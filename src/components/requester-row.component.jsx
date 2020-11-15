@@ -7,7 +7,8 @@ const RequesterRow = ({
     dateCreated,
     status,
     numOfRequests,
-    successRate
+    successRate,
+    action
 }) => (
     <div className="table__content__row">
         <span className="table__content__col col__mix col__20">
@@ -20,12 +21,10 @@ const RequesterRow = ({
             {status ? "Đang hoạt động" : "Ngưng hoạt động"}
         </span>
         <span className="table__content__col col__7">{numOfRequests}</span>
-        <span className="table__content__col col__10">
-            {successRate ? `${successRate}%` : "Không xác định"}
-        </span>
+        <span className="table__content__col col__10">{successRate ? `${successRate}%` : "-"}</span>
         <span className="table__content__action">
             <i className="fas fa-ban"></i>
-            <i className="fas fa-eye"></i>
+            <i onClick={action} className="fas fa-eye"></i>
         </span>
     </div>
 );
