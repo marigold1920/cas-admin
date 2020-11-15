@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import { selectCurrentUser, selectToken } from "./redux/user/user.selectors";
-import { selectCurrentItem, selectCurrentItemId } from "./redux/data/data.selectors";
+import { selectCurrentUser } from "./redux/user/user.selectors";
+import { selectCurrentItem } from "./redux/data/data.selectors";
 import { selectActiveItem } from "./redux/table/table.selectors";
-import { fetchItemDetails } from "./redux/data/data.actions";
 
 import LoginPage from "./pages/login.component";
 import DashboardPage from "./pages/dashboard.component";
@@ -16,11 +15,7 @@ import Modal from "./components/modal.component";
 
 import "./App.css";
 
-const App = ({ currentUser, currentItemId, currentItem, activeItem, token }) => {
-    useEffect(() => {
-        currentItemId && fetchItemDetails(token, activeItem, currentItemId);
-    }, [activeItem, currentItemId, token]);
-
+const App = ({ currentUser, currentItem, activeItem }) => {
     return (
         <Switch>
             {currentUser ? (
@@ -42,10 +37,8 @@ const App = ({ currentUser, currentItemId, currentItem, activeItem, token }) => 
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,
-    currentItemId: selectCurrentItemId,
     currentItem: selectCurrentItem,
-    activeItem: selectActiveItem,
-    token: selectToken
+    activeItem: selectActiveItem
 });
 
 export default connect(mapStateToProps)(App);
