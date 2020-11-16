@@ -39,12 +39,12 @@ const RequesterModal = ({
           />
           <InfoItem
             customStyle="item"
-            title="Huyet ap"
+            title="Huyết áp"
             value={healthInformation.bloodPressure}
           />
           <InfoItem
             customStyle="item"
-            title="Gioi tinh"
+            title="Giới tính"
             value={healthInformation.gender}
           />
           <InfoItem

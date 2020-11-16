@@ -12,13 +12,14 @@ import DashboardPage from "./pages/dashboard.component";
 import Navigation from "./components/navigation.component";
 import RequestModal from "./components/request-modal.component";
 import RequesterModal from './components/requester-modal.component';
+import DriverModal from "./components/driver-modal.component";
 import Modal from "./components/modal.component";
 
 import "./App.css";
 
 const App = ({ currentUser, currentItem, activeItem }) => {
     const title = activeItem === 'requests' ? 'Chi tiết yêu cầu' 
-                : activeItem === 'requesters' ? 'Chi tiết bệnh khách' : '';
+                : activeItem === 'requesters' ? 'Chi tiết bệnh khách' : 'Nhận xét về tài xế';
     return (
         <Switch>
             {currentUser ? (
@@ -31,6 +32,9 @@ const App = ({ currentUser, currentItem, activeItem }) => {
                         )}
                         {activeItem === "requesters" && currentItem && (
                             <RequesterModal item={currentItem}/>
+                        )}
+                        {activeItem === "drivers" && currentItem && (
+                            <DriverModal item={currentItem}/>
                         )}
                     </Modal>
                 </div>
