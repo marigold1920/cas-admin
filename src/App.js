@@ -11,30 +11,34 @@ import LoginPage from "./pages/login.component";
 import DashboardPage from "./pages/dashboard.component";
 import Navigation from "./components/navigation.component";
 import RequestModal from "./components/request-modal.component";
-import RequesterModal from './components/requester-modal.component';
+import RequesterModal from "./components/requester-modal.component";
 import DriverModal from "./components/driver-modal.component";
 import Modal from "./components/modal.component";
 
 import "./App.css";
 
+const titles = {
+    requests: "Chi tiết yêu cầu",
+    requesters: "Chi tiết bệnh khách",
+    drivers: "Nhận xét từ người dùng"
+};
+
 const App = ({ currentUser, currentItem, activeItem }) => {
-    const title = activeItem === 'requests' ? 'Chi tiết yêu cầu' 
-                : activeItem === 'requesters' ? 'Chi tiết bệnh khách' : 'Nhận xét về tài xế';
     return (
         <Switch>
             {currentUser ? (
                 <div className="index__page">
                     <Navigation />
                     <DashboardPage />
-                    <Modal title={title} visible={!!currentItem}>
+                    <Modal title={titles[activeItem]} visible={!!currentItem}>
                         {activeItem === "requests" && currentItem && (
                             <RequestModal item={currentItem} />
                         )}
                         {activeItem === "requesters" && currentItem && (
-                            <RequesterModal item={currentItem}/>
+                            <RequesterModal item={currentItem} />
                         )}
                         {activeItem === "drivers" && currentItem && (
-                            <DriverModal item={currentItem}/>
+                            <DriverModal item={currentItem} />
                         )}
                     </Modal>
                 </div>

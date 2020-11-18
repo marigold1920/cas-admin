@@ -12,12 +12,6 @@ const DriverInfo = ({ item: { driverName, driverRating, ambulanceImages, license
         <div className="section__info__item">
             <span className="title">Thông tin xe</span>
             <span className="license__plate">{licensePlate}</span>
-            <div className="ambulance__images">
-                {ambulanceImages.length &&
-                    ambulanceImages.map((image, index) => (
-                        <img key={index} src={image} alt="ambulance" />
-                    ))}
-            </div>
         </div>
     </div>
 );
