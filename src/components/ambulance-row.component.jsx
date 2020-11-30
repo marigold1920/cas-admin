@@ -20,8 +20,8 @@ const AmbulanceRow = ({
             {status ? "Đang hoạt động" : "Đã hủy đăng ký"}
         </span>
         <span className="table__content__action">
-            <i className="fas fa-ban"></i>
-            <i className="fas fa-eye"></i>
+            <span className="row__action details">Chi tiết</span>
+            <span className="row__action disable">Chặn</span>
         </span>
     </div>
 );

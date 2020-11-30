@@ -21,11 +21,11 @@ function* fetchDataStart({ payload: { actor, token } }) {
     }
 }
 
-function* fetchItemDetailsStart({ payload: { token, actor, itemId } }) {
+function* fetchItemDetailsStart({ payload: { token, actor, itemId, isPanel } }) {
     try {
         const response = yield call(fetchItemDetails, token, actor, itemId);
 
-        yield put(fetchItemDetailsSuccess(itemId, response.data));
+        yield put(fetchItemDetailsSuccess(itemId, response.data, isPanel));
     } catch (error) {
         yield put(fetchItemDetailsFail(error));
     }

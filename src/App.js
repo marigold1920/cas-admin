@@ -11,8 +11,6 @@ import LoginPage from "./pages/login.component";
 import DashboardPage from "./pages/dashboard.component";
 import Navigation from "./components/navigation.component";
 import RequestModal from "./components/request-modal.component";
-import RequesterModal from "./components/requester-modal.component";
-import DriverModal from "./components/driver-modal.component";
 import Modal from "./components/modal.component";
 
 import "./App.css";
@@ -30,15 +28,15 @@ const App = ({ currentUser, currentItem, activeItem }) => {
                 <div className="index__page">
                     <Navigation />
                     <DashboardPage />
-                    <Modal title={titles[activeItem]} visible={!!currentItem}>
+                    <Modal
+                        title={titles[activeItem]}
+                        visible={
+                            !!currentItem &&
+                            (activeItem === "requests" || activeItem === "ambulances")
+                        }
+                    >
                         {activeItem === "requests" && currentItem && (
                             <RequestModal item={currentItem} />
-                        )}
-                        {activeItem === "requesters" && currentItem && (
-                            <RequesterModal item={currentItem} />
-                        )}
-                        {activeItem === "drivers" && currentItem && (
-                            <DriverModal item={currentItem} />
                         )}
                     </Modal>
                 </div>

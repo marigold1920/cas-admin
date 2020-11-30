@@ -18,14 +18,14 @@ export const fetchDataFail = error => ({
     payload: error
 });
 
-export const fetchItemDetails = (token, actor, itemId) => ({
+export const fetchItemDetails = (token, actor, itemId, isPanel) => ({
     type: DataActionTypes.FETCH_ITEM_DETAILS_START,
-    payload: { token, actor, itemId }
+    payload: { token, actor, itemId, isPanel }
 });
 
-export const fetchItemDetailsSuccess = (itemId, item) => ({
+export const fetchItemDetailsSuccess = (itemId, item, isPanel) => ({
     type: DataActionTypes.FETCH_ITEM_DETAILS_SUCCESS,
-    payload: { itemId, item }
+    payload: { itemId, item, isPanel }
 });
 
 export const fetchItemDetailsFail = error => ({

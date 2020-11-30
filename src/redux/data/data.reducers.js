@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     data: [],
     error: null,
     currentItem: null,
-    currentItemId: null
+    currentItemId: null,
+    isPanel: false
 };
 
 const dataReducer = (state = INITIAL_STATE, action) => {
@@ -23,7 +24,8 @@ const dataReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentItem: action.payload.item,
-                currentItemId: action.payload.itemId
+                currentItemId: action.payload.itemId,
+                isPanel: action.payload.isPanel
             };
         case DataActionTypes.FETCH_ITEM_DETAILS_FAIL:
             return {
@@ -34,7 +36,8 @@ const dataReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentItem: null,
-                currentItemId: null
+                currentItemId: null,
+                isPanel: false
             };
         default:
             return state;

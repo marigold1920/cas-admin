@@ -5,11 +5,12 @@ import { createStructuredSelector } from "reselect";
 
 import { setActiveItem } from "../redux/table/table.actions";
 import { selectActiveItem } from "../redux/table/table.selectors";
+import { clearItem } from "../redux/data/data.actions";
 
 import ApplicationName from "./application-name.component";
 import NavigationItem from "./navigation-item.component";
 
-const Navigation = ({ activeItem, setActiveItem }) => {
+const Navigation = ({ activeItem, setActiveItem, clearItem }) => {
     const items = [
         { route: "dashboard", label: "Trang chủ", icon: "fas fa-chart-line" },
         { route: "requests", label: "Yêu cầu", icon: "fas fa-history" },
@@ -19,7 +20,8 @@ const Navigation = ({ activeItem, setActiveItem }) => {
         { route: "systems", label: "Hệ thống", icon: "fas fa-cogs" }
     ];
 
-    const handleOnClick = (route, label) => {
+    const handleOnClick = route => {
+        clearItem();
         setActiveItem(route);
     };
 
@@ -29,7 +31,7 @@ const Navigation = ({ activeItem, setActiveItem }) => {
             {items.map(({ route, label, icon }) => (
                 <Link
                     key={route}
-                    onClick={() => handleOnClick(route, label)}
+                    onClick={() => handleOnClick(route)}
                     to={route}
                     style={{ color: "#000" }}
                 >
@@ -45,7 +47,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setActiveItem: label => dispatch(setActiveItem(label))
+    setActiveItem: label => dispatch(setActiveItem(label)),
+    clearItem: () => dispatch(clearItem())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

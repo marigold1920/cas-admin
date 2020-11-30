@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
 import { selectActiveItem } from "../redux/table/table.selectors";
 import { selectToken } from "../redux/user/user.selectors";
-import { fetchData, fetchItemDetails } from "../redux/data/data.actions";
-import { selectCurrentData } from "../redux/data/data.selectors";
+import { clearItem, fetchData, fetchItemDetails } from "../redux/data/data.actions";
+import { selectCurrentData, selectCurrentItem, selectIsPanel } from "../redux/data/data.selectors";
 
 import DashboardHeader from "../components/dashboard-header.component";
 import Filter from "../components/filter.component";
@@ -15,6 +15,8 @@ import TableHeader from "../components/table-header.component";
 import CustomTable from "../components/custom-table.component";
 import AmbulanceRow from "../components/ambulance-row.component";
 import RequestRow from "../components/request-row.component";
+import Spinner from "../components/spinner.component";
+import UserDetails from "../components/user-details.component";
 
 const titles = {
     requesters: "Bệnh khách",
@@ -67,10 +69,28 @@ const sizes = {
     requests: ["col__20", "col__20", "col__7", "col__13", "col__10", "col__13"]
 };
 
-const DashBoardPage = ({ activeItem, data, fetchData, fetchItemDetails, token }) => {
+const DashBoardPage = ({
+    activeItem,
+    currentItem,
+    data,
+    token,
+    isPanel,
+    fetchData,
+    fetchItemDetails,
+    clearItem
+}) => {
     useEffect(() => {
         fetchData(activeItem, token);
     }, [fetchData, token, activeItem]);
+
+    const handleSelectUser = itemId => {
+        const state = true;
+        fetchItemDetails(token, activeItem, itemId, state);
+    };
+
+    const handleOnClosePanel = () => {
+        clearItem();
+    };
 
     return (
         <section className="dashboard">
@@ -78,42 +98,51 @@ const DashBoardPage = ({ activeItem, data, fetchData, fetchItemDetails, token })
             <Filter items={["Tất cả", "Đang hoạt động", "Ngưng hoạt động"]} activeItem="Tất cả" />
             <CustomTable>
                 <TableHeader items={headerItems[activeItem]} sizes={sizes[activeItem]} />
-                <div className="table__content">
-                    {data.length > 0
-                        ? data.map(({ itemId, ...otherProps }) =>
-                              activeItem === "requesters" || activeItem === "drivers" ? (
-                                  <RequesterRow 
-                                    action={() => fetchItemDetails(token, activeItem, itemId)}
-                                    key={itemId} 
-                                    {...otherProps} 
-                                />
-                              ) : activeItem === "ambulances" ? (
-                                  <AmbulanceRow key={itemId} {...otherProps} />
-                              ) : activeItem === "requests" ? (
-                                  <RequestRow
-                                      action={() => fetchItemDetails(token, activeItem, itemId)}
-                                      key={itemId}
-                                      {...otherProps}
-                                  />
-                              ) : null
-                          )
-                        : null}
-                </div>
+                <Suspense fallback={<Spinner />}>
+                    <div className={`table__content ${isPanel ? "deactive" : ""}`}>
+                        {data.length > 0
+                            ? data.map(({ itemId, ...otherProps }) =>
+                                  activeItem === "requesters" || activeItem === "drivers" ? (
+                                      <RequesterRow
+                                          action={() => handleSelectUser(itemId)}
+                                          key={itemId}
+                                          {...otherProps}
+                                      />
+                                  ) : activeItem === "ambulances" ? (
+                                      <AmbulanceRow key={itemId} {...otherProps} />
+                                  ) : activeItem === "requests" ? (
+                                      <RequestRow
+                                          action={() => fetchItemDetails(token, activeItem, itemId)}
+                                          key={itemId}
+                                          {...otherProps}
+                                      />
+                                  ) : null
+                              )
+                            : null}
+                    </div>
+                </Suspense>
             </CustomTable>
             <Pagination totalPage={5} currentPage={1} />
+            {isPanel && currentItem && (
+                <UserDetails item={currentItem} current={activeItem} onClose={handleOnClosePanel} />
+            )}
         </section>
     );
 };
 
 const mapStateToProps = createStructuredSelector({
     activeItem: selectActiveItem,
+    currentItem: selectCurrentItem,
     token: selectToken,
-    data: selectCurrentData
+    data: selectCurrentData,
+    isPanel: selectIsPanel
 });
 
 const mapDispatchToProps = dispatch => ({
     fetchData: (actor, token) => dispatch(fetchData(actor, token)),
-    fetchItemDetails: (token, actor, itemId) => dispatch(fetchItemDetails(token, actor, itemId)),
+    fetchItemDetails: (token, actor, itemId, isPanel) =>
+        dispatch(fetchItemDetails(token, actor, itemId, isPanel)),
+    clearItem: () => dispatch(clearItem())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardPage);

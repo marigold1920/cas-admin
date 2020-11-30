@@ -14,7 +14,7 @@ const PatientInfo = ({
     }
 }) => (
     <div className="section__info">
-        <div className="section__info__item">
+        <div className={`section__info__item ${!patientName ? "fill" : ""}`}>
             <span className="title">Thông tin người gửi</span>
             <InfoItem customStyle="item" title="Tên" value={requesterName} />
             <InfoItem customStyle="item" title="Số điện thoại" value={requesterPhone} />

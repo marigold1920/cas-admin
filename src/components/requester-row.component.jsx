@@ -23,8 +23,12 @@ const RequesterRow = ({
         <span className="table__content__col col__7">{numOfRequests}</span>
         <span className="table__content__col col__10">{successRate ? `${successRate}%` : "-"}</span>
         <span className="table__content__action">
-            <i className="fas fa-ban"></i>
-            <i onClick={action} className="fas fa-eye"></i>
+            <span onClick={action} className="row__action details">
+                Xem thêm
+            </span>
+            <span onClick={action} className="row__action disable">
+                Chặn
+            </span>
         </span>
     </div>
 );
