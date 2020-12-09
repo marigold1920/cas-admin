@@ -4,10 +4,19 @@ import {
     fetchDataSuccess,
     fetchDataFail,
     fetchItemDetailsSuccess,
-    fetchItemDetailsFail
+    fetchItemDetailsFail,
+    grantPermissionFail,
+    grantPermissionSuccess,
+    updateConfigurationsFail,
+    updateConfigurationsSuccess
 } from "./data.actions";
 
-import { fetchData, fetchItemDetails } from "../../apis/data.apis";
+import {
+    fetchData,
+    fetchItemDetails,
+    grantPermission,
+    updateConfigurations
+} from "../../apis/data.apis";
 
 import DataActionTypes from "./data.types";
 
@@ -31,6 +40,25 @@ function* fetchItemDetailsStart({ payload: { token, actor, itemId, isPanel } }) 
     }
 }
 
+function* grantPermissionStart({ payload: { token, actor, itemId } }) {
+    try {
+        yield call(grantPermission, token, actor, itemId);
+        yield put(grantPermissionSuccess(itemId));
+    } catch (error) {
+        yield put(grantPermissionFail(error));
+    }
+}
+
+function* updateConfigurationsStart({ payload: { token, configurations } }) {
+    try {
+        const response = yield call(updateConfigurations, token, configurations);
+
+        yield put(updateConfigurationsSuccess(response.data));
+    } catch (error) {
+        yield put(updateConfigurationsFail(error));
+    }
+}
+
 export function* onFetchData() {
     yield takeLatest(DataActionTypes.FETCH_DATA_START, fetchDataStart);
 }
@@ -39,6 +67,19 @@ export function* onFetchItemDetails() {
     yield takeLatest(DataActionTypes.FETCH_ITEM_DETAILS_START, fetchItemDetailsStart);
 }
 
+export function* onGrantPermission() {
+    yield takeLatest(DataActionTypes.GRANT_PERMISSION_START, grantPermissionStart);
+}
+
+export function* onUpdateConfigurations() {
+    yield takeLatest(DataActionTypes.UPDATE_CONFIGURATIONS_START, updateConfigurationsStart);
+}
+
 export function* dataSagas() {
-    yield all([call(onFetchData), call(onFetchItemDetails)]);
+    yield all([
+        call(onFetchData),
+        call(onFetchItemDetails),
+        call(onGrantPermission),
+        call(onUpdateConfigurations)
+    ]);
 }

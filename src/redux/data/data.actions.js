@@ -41,3 +41,33 @@ export const initItemId = itemId => ({
 export const clearItem = () => ({
     type: DataActionTypes.CLEAR_ITEM
 });
+
+export const grantPermission = (token, actor, itemId) => ({
+    type: DataActionTypes.GRANT_PERMISSION_START,
+    payload: { token, actor, itemId }
+});
+
+export const grantPermissionSuccess = itemId => ({
+    type: DataActionTypes.GRANT_PERMISSION_SUCCESS,
+    payload: itemId
+});
+
+export const grantPermissionFail = error => ({
+    type: DataActionTypes.GRANT_PERMISSION_FAIL,
+    payload: error
+});
+
+export const updateConfigurations = (token, configurations) => ({
+    type: DataActionTypes.UPDATE_CONFIGURATIONS_START,
+    payload: { token, configurations }
+});
+
+export const updateConfigurationsSuccess = configurations => ({
+    type: DataActionTypes.UPDATE_CONFIGURATIONS_SUCCESS,
+    payload: configurations
+});
+
+export const updateConfigurationsFail = error => ({
+    type: DataActionTypes.UPDATE_CONFIGURATIONS_FAIL,
+    payload: error
+});

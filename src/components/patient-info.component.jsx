@@ -4,7 +4,7 @@ import InfoItem from "./info-item.component";
 
 const PatientInfo = ({
     item: {
-        requesterName,
+        requestName,
         requesterPhone,
         morbidityNote,
         patientName,
@@ -16,9 +16,9 @@ const PatientInfo = ({
     <div className="section__info">
         <div className={`section__info__item ${!patientName ? "fill" : ""}`}>
             <span className="title">Thông tin người gửi</span>
-            <InfoItem customStyle="item" title="Tên" value={requesterName} />
+            <InfoItem customStyle="item" title="Tên" value={requestName} />
             <InfoItem customStyle="item" title="Số điện thoại" value={requesterPhone} />
-            <InfoItem customStyle="item" title="Ghi chú" value={morbidityNote} />
+            {morbidityNote && <InfoItem customStyle="item" title="Ghi chú" value={morbidityNote} />}
             {!patientName && (
                 <>
                     {healthInformation && (
@@ -28,7 +28,9 @@ const PatientInfo = ({
                             value={healthInformation}
                         />
                     )}
-                    <InfoItem customStyle="item" title="Tình trạng cấp cứu" value={morbidity} />
+                    {morbidity && (
+                        <InfoItem customStyle="item" title="Tình trạng cấp cứu" value={morbidity} />
+                    )}
                 </>
             )}
         </div>

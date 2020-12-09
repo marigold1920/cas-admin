@@ -4,7 +4,7 @@ import History from "./history.component";
 
 const RequesterDetails = ({ item }) => (
     <>
-        <span class="title">Lịch sử gọi xe</span>
+        <span className="title">Lịch sử gọi xe</span>
         {item.length ? (
             item.map(i => <History key={i.requestId} item={i} />)
         ) : (

@@ -2,7 +2,7 @@ import React from "react";
 
 import Rating from "./rating.component";
 
-const FeedbackDriver = ({ name, requestName, requesterImage, ratingDriver, feedbackDriver }) => (
+const FeedbackDriver = ({ requestName, requesterImage, ratingDriver, feedbackDriver }) => (
     <div class="feedback__item">
         <div class="requester">
             <img src={requesterImage} alt="requester" />

@@ -9,7 +9,7 @@ const RequestRow = ({
     typeRequest = "Đặt cho người khác",
     typeTransport = "Đi cấp cứu",
     status,
-    action
+    viewDetails
 }) => (
     <div className="table__content__row">
         <span className="table__content__col col__mix col__20">
@@ -26,7 +26,7 @@ const RequestRow = ({
         <span className="table__content__col col__13">{status}</span>
         <span className="table__content__action">
             {/* <i onClick={action} className="fas fa-eye"></i> */}
-            <span onClick={action} className="row__action details">
+            <span onClick={viewDetails} className="row__action details">
                 Chi tiết
             </span>
         </span>

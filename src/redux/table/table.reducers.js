@@ -1,7 +1,7 @@
 import TableActionTypes from "./table.types";
 
 const INITIAL_STATE = {
-    activeItem: "requests"
+    activeItem: "reports"
 };
 
 const tableReducer = (state = INITIAL_STATE, action) => {

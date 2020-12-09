@@ -1,4 +1,5 @@
 import DataActionTypes from "./data.types";
+import { grantPermission } from "./data.utils";
 
 const INITIAL_STATE = {
     data: [],
@@ -38,6 +39,31 @@ const dataReducer = (state = INITIAL_STATE, action) => {
                 currentItem: null,
                 currentItemId: null,
                 isPanel: false
+            };
+        case DataActionTypes.GRANT_PERMISSION_SUCCESS:
+            return {
+                ...state,
+                data: grantPermission(state.data, action.payload)
+            };
+        case DataActionTypes.GRANT_PERMISSION_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            };
+        case DataActionTypes.INIT_ITEM_ID:
+            return {
+                ...state,
+                currentItemId: action.payload
+            };
+        case DataActionTypes.UPDATE_CONFIGURATIONS_SUCCESS:
+            return {
+                ...state,
+                data: { ...state.data, configurations: action.payload }
+            };
+        case DataActionTypes.UPDATE_CONFIGURATIONS_FAIL:
+            return {
+                ...state,
+                error: action.payload
             };
         default:
             return state;

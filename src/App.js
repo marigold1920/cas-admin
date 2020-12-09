@@ -1,56 +1,34 @@
-import React from "react";
-import { Switch } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
 import { selectCurrentUser } from "./redux/user/user.selectors";
-import { selectCurrentItem } from "./redux/data/data.selectors";
-import { selectActiveItem } from "./redux/table/table.selectors";
 
-import LoginPage from "./pages/login.component";
-import DashboardPage from "./pages/dashboard.component";
-import Navigation from "./components/navigation.component";
-import RequestModal from "./components/request-modal.component";
-import Modal from "./components/modal.component";
+import Spinner from "./components/spinner.component";
 
 import "./App.css";
 
-const titles = {
-    requests: "Chi tiết yêu cầu",
-    requesters: "Chi tiết bệnh khách",
-    drivers: "Nhận xét từ người dùng"
-};
+const LoginPage = lazy(() => import("./pages/login.component"));
+const HomePage = lazy(() => import("./pages/home.component"));
 
-const App = ({ currentUser, currentItem, activeItem }) => {
+const App = ({ currentUser }) => {
     return (
         <Switch>
-            {currentUser ? (
-                <div className="index__page">
-                    <Navigation />
-                    <DashboardPage />
-                    <Modal
-                        title={titles[activeItem]}
-                        visible={
-                            !!currentItem &&
-                            (activeItem === "requests" || activeItem === "ambulances")
-                        }
-                    >
-                        {activeItem === "requests" && currentItem && (
-                            <RequestModal item={currentItem} />
-                        )}
-                    </Modal>
-                </div>
-            ) : (
-                <LoginPage />
-            )}
+            <Suspense fallback={<Spinner />}>
+                <Route exact path="/dashboard" component={HomePage} />
+                <Route
+                    exact
+                    path="/"
+                    render={() => (currentUser ? <Redirect to="/dashboard" /> : <LoginPage />)}
+                />
+            </Suspense>
         </Switch>
     );
 };
 
 const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser,
-    currentItem: selectCurrentItem,
-    activeItem: selectActiveItem
+    currentUser: selectCurrentUser
 });
 
 export default connect(mapStateToProps)(App);
