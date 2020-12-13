@@ -1,5 +1,5 @@
 import DataActionTypes from "./data.types";
-import { grantPermission } from "./data.utils";
+import { grantPermission, handleRegisterAmbulance } from "./data.utils";
 
 const INITIAL_STATE = {
     data: [],
@@ -16,22 +16,12 @@ const dataReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 data: action.payload
             };
-        case DataActionTypes.FETCH_DATA_FAIL:
-            return {
-                ...state,
-                error: action.payload
-            };
         case DataActionTypes.FETCH_ITEM_DETAILS_SUCCESS:
             return {
                 ...state,
                 currentItem: action.payload.item,
                 currentItemId: action.payload.itemId,
                 isPanel: action.payload.isPanel
-            };
-        case DataActionTypes.FETCH_ITEM_DETAILS_FAIL:
-            return {
-                ...state,
-                error: action.payload
             };
         case DataActionTypes.CLEAR_ITEM:
             return {
@@ -45,11 +35,6 @@ const dataReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 data: grantPermission(state.data, action.payload)
             };
-        case DataActionTypes.GRANT_PERMISSION_FAIL:
-            return {
-                ...state,
-                error: action.payload
-            };
         case DataActionTypes.INIT_ITEM_ID:
             return {
                 ...state,
@@ -60,7 +45,22 @@ const dataReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 data: { ...state.data, configurations: action.payload }
             };
+        case DataActionTypes.ACCEPT_REGISTER_AMBULANCE_SUCCESS:
+        case DataActionTypes.REJECT_REGISTER_AMBULANCE_SUCCESS:
+            return {
+                ...state,
+                data: handleRegisterAmbulance(
+                    state.data,
+                    action.payload.ambulanceId,
+                    action.payload.status
+                )
+            };
+        case DataActionTypes.FETCH_DATA_FAIL:
+        case DataActionTypes.FETCH_ITEM_DETAILS_FAIL:
+        case DataActionTypes.GRANT_PERMISSION_FAIL:
         case DataActionTypes.UPDATE_CONFIGURATIONS_FAIL:
+        case DataActionTypes.ACCEPT_REGISTER_AMBULANCE_FAIL:
+        case DataActionTypes.REJECT_REGISTER_AMBULANCE_FAIL:
             return {
                 ...state,
                 error: action.payload

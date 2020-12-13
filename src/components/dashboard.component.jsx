@@ -17,6 +17,7 @@ import {
     selectIsPanel
 } from "../redux/data/data.selectors";
 import { modalMessages } from "../utils/modal-messages.data";
+import { selectStatusCode } from "../redux/message/message.selectors";
 
 import DashboardHeader from "./dashboard-header.component";
 import Filter from "./filter.component";
@@ -29,6 +30,7 @@ import RequestRow from "./request-row.component";
 import Spinner from "./spinner.component";
 import UserDetails from "./user-details.component";
 import MessageModal from "./message-modal.component";
+import SuccessModal from "./success-modal.component";
 
 const titles = {
     requesters: "Người gửi yêu cầu",
@@ -88,6 +90,7 @@ const DashBoard = ({
     data,
     token,
     isPanel,
+    statusCode,
     fetchItemDetails,
     clearItem,
     initItemId,
@@ -125,7 +128,7 @@ const DashBoard = ({
 
     return (
         <>
-            <section className={`dashboard ${confirmation ? "blur" : ""}`}>
+            <section className={`dashboard ${confirmation || statusCode ? "blur" : ""}`}>
                 <DashboardHeader title={titles[activeItem]} />
                 <Filter
                     items={["Tất cả", "Đang hoạt động", "Ngưng hoạt động"]}
@@ -182,6 +185,7 @@ const DashBoard = ({
                 onConfirm={() => handleConfirm(token, activeItem, currentItemId)}
                 onClose={handleOnClose}
             />
+            <SuccessModal />
         </>
     );
 };
@@ -192,7 +196,8 @@ const mapStateToProps = createStructuredSelector({
     currentItemId: selectCurrentItemId,
     token: selectToken,
     data: selectCurrentData,
-    isPanel: selectIsPanel
+    isPanel: selectIsPanel,
+    statusCode: selectStatusCode
 });
 
 const mapDispatchToProps = dispatch => ({

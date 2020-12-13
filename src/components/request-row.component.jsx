@@ -25,10 +25,10 @@ const RequestRow = ({
         <span className="table__content__col col__10">{typeTransport}</span>
         <span className="table__content__col col__13">{status}</span>
         <span className="table__content__action">
-            {/* <i onClick={action} className="fas fa-eye"></i> */}
-            <span onClick={viewDetails} className="row__action details">
+            <i onClick={viewDetails} className="fas fa-info-circle"></i>
+            {/* <span onClick={viewDetails} className="row__action details">
                 Chi tiết
-            </span>
+            </span> */}
         </span>
     </div>
 );

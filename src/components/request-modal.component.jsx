@@ -7,7 +7,7 @@ import DriverInfo from "./driver-info.component";
 import Feedback from "./feedback.component";
 
 const RequestModal = ({ item }) => (
-    <>
+    <div className="request__details">
         <span className="content__title">Tổng quan</span>
         <RequestOverview
             status={item.status}
@@ -25,7 +25,7 @@ const RequestModal = ({ item }) => (
         <DriverInfo item={item} />
         <span className="content__title">Góp ý và phản hồi</span>
         <Feedback item={item} />
-    </>
+    </div>
 );
 
 export default RequestModal;

@@ -24,12 +24,11 @@ const RequesterRow = ({
         <span className="table__content__col col__7">{numOfRequests}</span>
         <span className="table__content__col col__10">{successRate ? `${successRate}%` : "-"}</span>
         <span className="table__content__action">
-            <span onClick={viewDetails} className="row__action details">
-                Xem thêm
-            </span>
-            <span onClick={grantPermission} className="row__action disable">
-                {status ? "Chặn" : "Mở"}
-            </span>
+            <i onClick={viewDetails} className="fas fa-info-circle"></i>
+            <i
+                onClick={grantPermission}
+                className={`fas ${status ? "fa-minus-circle" : "fa-check-circle"}`}
+            ></i>
         </span>
     </div>
 );

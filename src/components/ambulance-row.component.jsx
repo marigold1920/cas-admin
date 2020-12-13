@@ -17,15 +17,21 @@ const AmbulanceRow = ({
             <span className="name">{driverName}</span>
         </span>
         <span className="table__content__col col__10">{registrationDate}</span>
-        <span className="table__content__col col__15">{expirationDate}</span>
+        <span className="table__content__col col__15">{expirationDate || "-"}</span>
         <span className="table__content__col col__10">{status}</span>
         <span className="table__content__action">
-            <span onClick={viewDetails} className="row__action details">
-                Chi tiết
-            </span>
-            <span onClick={grantPermission} className="row__action disable">
-                {status ? "Chặn" : "Mở"}
-            </span>
+            <i
+                onClick={viewDetails}
+                className={`fas ${
+                    status === "Chờ xác nhận" ? "fa-question-circle" : "fa-info-circle"
+                }`}
+            ></i>
+            {status === "Đang hoạt động" && (
+                <i onClick={grantPermission} className="fas fa-minus-circle"></i>
+            )}
+            {status === "Bị khóa hoạt động" && (
+                <i onClick={grantPermission} className="fas fa-check-circle"></i>
+            )}
         </span>
     </div>
 );

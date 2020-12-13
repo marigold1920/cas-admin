@@ -21,7 +21,7 @@
     margin: 0;
     box-sizing: border-box;
     font-weight: 400;
-    font-family: Tex;
+    font-family: "Tex", sans-serif;
 }
 
 #root {
@@ -334,16 +334,14 @@ a {
     user-select: none;
 }
 
-.table__content__row:hover {
-    background: #fff;
+/* .table__content__row:hover {
+    background: #f2f5fa;
     border-radius: 20px;
-    padding: 20px 0;
-    padding-left: 20px;
     transition: 0.5s;
-}
+} */
 
 .col__10 {
-    width: 13%;
+    width: 15%;
 }
 
 .col__13 {
@@ -370,6 +368,11 @@ a {
 .table__content__col {
     font-size: 1.05rem;
     font-weight: bold;
+}
+
+.table__header:first-child,
+.table__content__col:first-child {
+    padding-left: 30px;
 }
 
 .col__mix {
@@ -414,6 +417,20 @@ a {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+}
+
+.table__content__action i {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    transition: 0.75s;
+    margin-right: 5px;
+}
+
+.table__content__action i:hover {
+    background: #000;
+    color: #fff;
 }
 
 .row__action {
@@ -475,7 +492,8 @@ a {
     transition: 1.5s;
 }
 
-.message__modal {
+.message__modal,
+.success__modal {
     position: fixed;
     z-index: -1;
     width: 25%;
@@ -484,37 +502,55 @@ a {
     align-items: center;
     background: #fff;
     border-radius: 10px;
+    padding: 20px 0;
+    opacity: 0;
 }
 
-.message__modal.visible {
+.success__modal img {
+    width: 120px;
+}
+
+.message__modal.visible,
+.success__modal.visible {
     z-index: 20;
+    opacity: 1;
 }
 
 .confirm__title {
     font-size: 1.25rem;
     font-weight: bold;
     text-transform: uppercase;
+    margin-bottom: 20px;
 }
 
 .message__modal .group__action {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin: 10px 0;
     margin-top: 30px;
 }
 
-.message__modal p {
+.message__modal p,
+.success__modal p {
     font-size: 1.05rem;
     width: 85%;
     margin: 10px 0;
+}
+
+.success__modal p {
+    text-align: center;
+}
+
+.success__modal p {
+    margin: 20px 0;
 }
 
 .message__modal p.confirm {
     font-weight: bold;
 }
 
-.message__modal .group__action span {
+.message__modal .group__action span,
+.success__modal span {
     font-size: 0.85rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -525,7 +561,8 @@ a {
     cursor: pointer;
 }
 
-.message__modal span.confirm__action {
+.message__modal span.confirm__action,
+.success__modal span.confirm__action {
     background: #01c33b;
     margin-left: 15px;
     padding: 8px 20px;
@@ -569,7 +606,7 @@ a {
 }
 
 .modal__body {
-    width: 50%;
+    width: 100%;
     height: 100%;
     background-size: cover;
     border-radius: 10px;
@@ -580,7 +617,7 @@ a {
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 10px 25%;
 }
 
 .modal__header .title {
@@ -602,6 +639,7 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: 0 10px;
     min-height: 15vh;
 }
@@ -611,6 +649,10 @@ a {
     font-weight: bold;
     color: #444;
     margin-top: 5px;
+}
+
+.request__details {
+    width: 50%;
 }
 
 .position,
@@ -977,7 +1019,17 @@ a {
     color: #3d3d4e;
 }
 
+.wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper.blur {
+    filter: brightness(0.85);
+}
+
 .registered__profile {
+    width: 50%;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -992,8 +1044,8 @@ a {
 }
 
 .registered__item img {
-    width: 100%;
-    height: 280px;
+    width: 85%;
+    height: 250px;
     border-radius: 10px;
 }
 
@@ -1002,7 +1054,7 @@ a {
 }
 
 .registered__item input {
-    width: 100%;
+    width: 85%;
     padding: 10px 20px;
     border-radius: 10px;
     outline: none;
@@ -1016,43 +1068,46 @@ a {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 50px;
 }
 
 .registered__profile .group__action span {
-    padding: 7px 20px;
+    padding: 10px 20px;
     font-size: 0.95rem;
     text-transform: uppercase;
     font-weight: bold;
     margin-right: 10px;
-    border-radius: 25px;
-    cursor: pointer;
+    border-radius: 10px;
     transition: 0.75s;
+    color: #fff;
 }
 
 .registered__profile .group__action span:hover {
     border: none;
-    color: #fff;
+    cursor: pointer;
 }
 
 .registered__profile .group__action .accept {
-    padding: 7px 30px;
-    border: 1px solid #19d600;
-    color: #19d600;
+    padding: 10px 50px;
+    background: #19d600;
     transition: 0.75s;
 }
 
 .registered__profile .group__action .accept:hover {
-    background: #19d600;
+    border: 1px solid #19d600;
+    color: #19d600;
+    background: none;
 }
 
 .registered__profile .group__action .deny {
-    border: 1px solid #000;
+    background: #000;
     transition: 0.75s;
 }
 
 .registered__profile .group__action .deny:hover {
-    background: #000;
+    border: 1px solid #000;
+    background: none;
+    color: #000;
 }
 
 .registered__profile .group__action .grant {

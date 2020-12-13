@@ -36,3 +36,19 @@ export const updateConfigurations = (token, configurations) => {
         }
     });
 };
+
+export const acceptRegisterAmbulance = (token, ambulanceId) => {
+    return api.get(`/ambulances/accept/${ambulanceId}`, {
+        headers: {
+            Authorization: token
+        }
+    });
+};
+
+export const rejectRegisterAmbulance = (token, ambulanceId, note) => {
+    return api.post(`/ambulances/reject/${ambulanceId}`, note, {
+        headers: {
+            Authorization: token
+        }
+    });
+};

@@ -71,3 +71,33 @@ export const updateConfigurationsFail = error => ({
     type: DataActionTypes.UPDATE_CONFIGURATIONS_FAIL,
     payload: error
 });
+
+export const acceptRegisterAmbulance = (token, ambulanceId) => ({
+    type: DataActionTypes.ACCEPT_REGISTER_AMBULANCE_START,
+    payload: { token, ambulanceId }
+});
+
+export const acceptRegisterAmbulanceSuccess = (ambulanceId, status) => ({
+    type: DataActionTypes.ACCEPT_REGISTER_AMBULANCE_SUCCESS,
+    payload: { ambulanceId, status }
+});
+
+export const acceptRegisterAmbulanceFail = error => ({
+    type: DataActionTypes.ACCEPT_REGISTER_AMBULANCE_FAIL,
+    payload: error
+});
+
+export const rejectRegisterAmbulance = (token, ambulanceId, note) => ({
+    type: DataActionTypes.REJECT_REGISTER_AMBULANCE_START,
+    payload: { token, ambulanceId, note }
+});
+
+export const rejectRegisterAmbulanceSuccess = (ambulanceId, status) => ({
+    type: DataActionTypes.REJECT_REGISTER_AMBULANCE_SUCCESS,
+    payload: { ambulanceId, status }
+});
+
+export const rejectRegisterAmbulanceFail = error => ({
+    type: DataActionTypes.REJECT_REGISTER_AMBULANCE_FAIL,
+    payload: error
+});
