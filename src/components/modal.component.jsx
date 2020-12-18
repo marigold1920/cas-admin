@@ -4,13 +4,13 @@ import { clearItem } from "../redux/data/data.actions";
 
 const Modal = ({ title, children, visible, clearItem }) => (
     <div className={`modal ${visible && "visible"}`}>
+        <span onClick={clearItem} className="close">
+            &times;
+        </span>
         <div className="modal__mask">
             <div className="modal__body">
                 <div className="modal__header">
                     <span className="title">{title}</span>
-                    <span onClick={clearItem} className="close">
-                        &times;
-                    </span>
                 </div>
                 <div className="modal__content">{children}</div>
             </div>

@@ -20,3 +20,35 @@ export const fetchItemDetails = (token, actor, itemId) => {
         }
     });
 };
+
+export const grantPermission = (token, actor, itemId) => {
+    return api.get(`/${actor}/${itemId}`, {
+        headers: {
+            Authorization: token
+        }
+    });
+};
+
+export const updateConfigurations = (token, configurations) => {
+    return api.post("/system/configurations", configurations, {
+        headers: {
+            Authorization: token
+        }
+    });
+};
+
+export const acceptRegisterAmbulance = (token, ambulanceId) => {
+    return api.get(`/ambulances/accept/${ambulanceId}`, {
+        headers: {
+            Authorization: token
+        }
+    });
+};
+
+export const rejectRegisterAmbulance = (token, ambulanceId, note) => {
+    return api.post(`/ambulances/reject/${ambulanceId}`, note, {
+        headers: {
+            Authorization: token
+        }
+    });
+};
