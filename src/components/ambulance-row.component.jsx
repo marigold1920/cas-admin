@@ -26,12 +26,6 @@ const AmbulanceRow = ({
                     status === "Chờ xác nhận" ? "fa-question-circle" : "fa-info-circle"
                 }`}
             ></i>
-            {status === "Đang hoạt động" && (
-                <i onClick={grantPermission} className="fas fa-minus-circle"></i>
-            )}
-            {status === "Bị khóa hoạt động" && (
-                <i onClick={grantPermission} className="fas fa-check-circle"></i>
-            )}
         </span>
     </div>
 );

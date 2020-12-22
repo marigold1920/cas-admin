@@ -64,28 +64,28 @@ const AmbulanceModal = ({
             <div className="registered__profile">
                 <RegisteredImage
                     imageUrl={identityCard}
-                    isActive={status !== "DEACTIVE"}
+                    isActive={status !== "DEACTIVE" && status !== "CANCELED"}
                     title="Chứng minh nhân dân"
                     name="identityCard"
                     onChange={handleOnChange}
                 />
                 <RegisteredImage
                     imageUrl={driverLicense}
-                    isActive={status !== "DEACTIVE"}
+                    isActive={status !== "DEACTIVE" && status !== "CANCELED"}
                     title="Giấy phép lái xe"
                     name="driverLicense"
                     onChange={handleOnChange}
                 />
                 <RegisteredImage
                     imageUrl={registerLicense}
-                    isActive={status !== "DEACTIVE"}
+                    isActive={status !== "DEACTIVE" && status !== "CANCELED"}
                     title="Giấy đăng kiểm"
                     name="registerLicense"
                     onChange={handleOnChange}
                 />
                 <RegisteredImage
                     imageUrl={registryCertificate}
-                    isActive={status !== "DEACTIVE"}
+                    isActive={status !== "DEACTIVE" && status !== "CANCELED"}
                     title="Cà vẹt xe"
                     name="image"
                     onChange={handleOnChange}
@@ -102,9 +102,13 @@ const AmbulanceModal = ({
                         </>
                     ) : status === "ACTIVE" ? (
                         <span className="grant">Chặn hoạt động</span>
-                    ) : (
+                    ) : status === "REJECTED" ? (
+                        <span onClick={handleAccept} className="accept">
+                            Duyệt
+                        </span>
+                    ) : status === "DEACTIVE" ? (
                         <span className="grant">Mở hoạt động</span>
-                    )}
+                    ) : null}
                 </div>
             </div>
             <MessageModal

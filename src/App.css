@@ -26,12 +26,12 @@
 
 #root {
     min-height: 100vh;
-    background: #000;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 0.85rem;
+    background-image: url(https://i.ibb.co/b3BW0Nh/background-main.png);
 }
 
 a {
@@ -109,16 +109,19 @@ a {
 
 /* DASHBOARD */
 .index__page {
-    width: 95%;
+    width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #000;
+}
+
+.index__page.blur {
+    filter: blur(3px);
 }
 
 .vertical__navigation {
-    flex-basis: 10%;
+    width: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -151,7 +154,7 @@ a {
 .application__name .name {
     font: 2.75rem Aquire, sans-serfi;
     margin-left: 10px;
-    color: #fff;
+    color: #000;
 }
 
 .nav__item {
@@ -172,7 +175,7 @@ a {
 
 .nav__item i {
     font-size: 1.75rem;
-    color: rgb(223, 223, 223);
+    color: #000;
 }
 
 .nav__item .label {
@@ -192,14 +195,14 @@ a {
 
 .dashboard {
     flex: 1;
-    height: 98%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
     padding: 0 30px;
-    border-radius: 40px;
+    border-radius: 10px;
     position: relative;
 }
 
@@ -437,10 +440,11 @@ a {
     font-size: 0.85rem;
     font-weight: bold;
     cursor: pointer;
-    padding: 5px 15px;
+    padding: 8px 20px;
     margin-right: 5px;
     border-radius: 10px;
-    color: #fff;
+    color: #0d0c02;
+    transition: 0.5s;
 }
 
 .row__action.details {
@@ -448,9 +452,12 @@ a {
 }
 
 .row__action.disable {
-    background: #fd4092;
+    background: #f3f3f4;
 }
 
+.row__action.disable:hover {
+    background: #b9b9b9;
+}
 /*----------------------- Pagination -----------------------*/
 .pagination {
     flex: 1;
@@ -504,6 +511,8 @@ a {
     border-radius: 10px;
     padding: 20px 0;
     opacity: 0;
+    margin-top: -10%;
+    transition: 0.5s;
 }
 
 .success__modal img {
@@ -514,6 +523,7 @@ a {
 .success__modal.visible {
     z-index: 20;
     opacity: 1;
+    margin-top: 0;
 }
 
 .confirm__title {
@@ -554,19 +564,26 @@ a {
     font-size: 0.85rem;
     font-weight: bold;
     text-transform: uppercase;
-    background: #000;
-    color: #fff;
+    background: #f3f3f4;
+    color: #0d0c22;
     padding: 8px 40px;
     border-radius: 5px;
     cursor: pointer;
+    transition: 0.75s;
+    margin-right: 10px;
 }
 
-.message__modal span.confirm__action,
+.message__modal .group__action span:hover,
+.success__modal span:hover {
+    background: #b9b9b9;
+}
+
+/* .message__modal span.confirm__action,
 .success__modal span.confirm__action {
     background: #01c33b;
     margin-left: 15px;
     padding: 8px 20px;
-}
+} */
 
 .modal.visible {
     opacity: 1;
@@ -858,9 +875,9 @@ a {
     overflow: hidden;
     overflow-y: scroll;
     padding: 20px 10px;
-    background: #f6f5fa34;
+
     border-left: 0.05rem solid rgba(0, 0, 0, 0.15);
-    border-radius: 0 40px 40px 0;
+    border-radius: 0 10px 10px 0;
     transition: 0.5s;
     opacity: 0;
     z-index: -1;
@@ -870,7 +887,7 @@ a {
     width: 30%;
     z-index: 10;
     opacity: 1;
-    background: #f6f5fa;
+    background: #fff;
 }
 
 .user__details .header {
@@ -997,7 +1014,7 @@ a {
 
 .history .place {
     padding: 10px 0;
-    background: #fff;
+    background: #f2f5fa;
 }
 
 .place img {
@@ -1072,52 +1089,21 @@ a {
 }
 
 .registered__profile .group__action span {
-    padding: 10px 20px;
+    padding: 8px 35px;
     font-size: 0.95rem;
-    text-transform: uppercase;
     font-weight: bold;
     margin-right: 10px;
     border-radius: 10px;
     transition: 0.75s;
-    color: #fff;
+    color: #0d0c22;
+    background: #f3f3f4;
+    transition: 0.75s;
 }
 
 .registered__profile .group__action span:hover {
     border: none;
     cursor: pointer;
-}
-
-.registered__profile .group__action .accept {
-    padding: 10px 50px;
-    background: #19d600;
-    transition: 0.75s;
-}
-
-.registered__profile .group__action .accept:hover {
-    border: 1px solid #19d600;
-    color: #19d600;
-    background: none;
-}
-
-.registered__profile .group__action .deny {
-    background: #000;
-    transition: 0.75s;
-}
-
-.registered__profile .group__action .deny:hover {
-    border: 1px solid #000;
-    background: none;
-    color: #000;
-}
-
-.registered__profile .group__action .grant {
-    border: 2px solid #fd4092;
-    color: #fd4092;
-    transition: 0.75s;
-}
-
-.registered__profile .group__action .grant:hover {
-    background: #fd4092;
+    background: #b9b9b9;
 }
 
 .spinner {
@@ -1145,13 +1131,13 @@ a {
 /* REPORT PAGE  */
 .report {
     flex: 1;
-    height: 98%;
+    height: 100%;
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    background: #fff;
-    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 20px;
     padding: 10px 20px;
 }
 
