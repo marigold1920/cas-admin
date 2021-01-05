@@ -8,7 +8,14 @@ import { statusMessage } from "../utils/status-message.data";
 
 const SuccessModal = ({ statusCode, clearStatusCode }) => (
     <div className={`success__modal ${statusCode ? "visible" : ""}`}>
-        <img src="https://i.ibb.co/cLw8tgq/success-icon-10.png" alt="success" />
+        <img
+            src={
+                statusCode < 400
+                    ? "https://i.ibb.co/cLw8tgq/success-icon-10.png"
+                    : "https://i.ibb.co/cQWSJWL/error.png"
+            }
+            alt="success"
+        />
         <p>{statusMessage[statusCode]}</p>
         <span onClick={() => clearStatusCode()} className="confirm__action">
             Xác nhận

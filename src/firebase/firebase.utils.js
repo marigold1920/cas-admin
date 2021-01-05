@@ -16,10 +16,17 @@ firebase.initializeApp(firebaseConfig);
 export const firestore = firebase.firestore();
 
 export const approveRegisterAmbulance = async username => {
-    console.log("SAY HIIIIIIIIIIIIIIIIIIIIIIIIII");
     const documentRef = firestore.collection("confirmations").doc(`${username}`);
 
     await documentRef.update({
         confirmationStatus: "approved"
+    });
+};
+
+export const denyRegisterAmbulance = async username => {
+    const documentRef = firestore.collection("confirmations").doc(`${username}`);
+
+    await documentRef.update({
+        confirmationStatus: "rejected"
     });
 };

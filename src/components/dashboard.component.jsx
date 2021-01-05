@@ -127,10 +127,7 @@ const DashBoard = ({
         <>
             <section className={`dashboard ${confirmation ? "blur" : ""}`}>
                 <DashboardHeader title={titles[activeItem]} />
-                <Filter
-                    items={["Tất cả", "Đang hoạt động", "Ngưng hoạt động"]}
-                    activeItem="Tất cả"
-                />
+                <Filter items={["Tất cả"]} activeItem="Tất cả" />
                 <CustomTable>
                     <TableHeader items={headerItems[activeItem]} sizes={sizes[activeItem]} />
                     <Suspense fallback={<Spinner />}>

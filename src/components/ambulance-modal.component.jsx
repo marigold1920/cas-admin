@@ -12,7 +12,7 @@ import { modalMessages } from "../utils/modal-messages.data";
 
 import RegisteredImage from "./registered-image.component";
 import MessageModal from "./message-modal.component";
-import { approveRegisterAmbulance } from "../firebase/firebase.utils";
+import { approveRegisterAmbulance, denyRegisterAmbulance } from "../firebase/firebase.utils";
 
 const AmbulanceModal = ({
     item: {
@@ -22,14 +22,15 @@ const AmbulanceModal = ({
         driverLicense,
         registerLicense,
         registryCertificate,
-        username
+        username,
+        note
     },
     token,
     acceptRegisterAmbulance,
     rejectRegisterAmbulance,
     clearItem
 }) => {
-    const [note, setNote] = useState({
+    const [_note, setNote] = useState({
         identityCard: "",
         driverLicense: "",
         registerLicense: "",
@@ -39,21 +40,21 @@ const AmbulanceModal = ({
 
     const handleOnChange = event => {
         const { name, value } = event.target;
-        setNote({ ...note, [name]: value });
+        setNote({ ..._note, [name]: value });
     };
 
     const handleAccept = () => {
         clearItem();
         acceptRegisterAmbulance(token, ambulanceId);
-        console.log(username);
         approveRegisterAmbulance(username);
     };
 
     const handleDeny = () => {
-        const isEmpty = !Object.values(note).some(x => x !== "");
+        const isEmpty = !Object.values(_note).some(x => x !== "");
         if (!isEmpty) {
             clearItem();
-            rejectRegisterAmbulance(token, ambulanceId, note);
+            denyRegisterAmbulance(username);
+            rejectRegisterAmbulance(token, ambulanceId, _note);
         } else {
             setWarning(true);
         }
@@ -64,31 +65,35 @@ const AmbulanceModal = ({
             <div className="registered__profile">
                 <RegisteredImage
                     imageUrl={identityCard}
-                    isActive={status !== "DEACTIVE" && status !== "CANCELED"}
+                    isActive={status === "CONFIRMING"}
                     title="Chứng minh nhân dân"
                     name="identityCard"
                     onChange={handleOnChange}
+                    defaultValue={(note && note.identityCard) || ""}
                 />
                 <RegisteredImage
                     imageUrl={driverLicense}
-                    isActive={status !== "DEACTIVE" && status !== "CANCELED"}
+                    isActive={status === "CONFIRMING"}
                     title="Giấy phép lái xe"
                     name="driverLicense"
                     onChange={handleOnChange}
+                    defaultValue={(note && note.driverLicense) || ""}
                 />
                 <RegisteredImage
                     imageUrl={registerLicense}
-                    isActive={status !== "DEACTIVE" && status !== "CANCELED"}
+                    isActive={status === "CONFIRMING"}
                     title="Giấy đăng kiểm"
                     name="registerLicense"
                     onChange={handleOnChange}
+                    defaultValue={(note && note.registerLicense) || ""}
                 />
                 <RegisteredImage
                     imageUrl={registryCertificate}
-                    isActive={status !== "DEACTIVE" && status !== "CANCELED"}
+                    isActive={status === "CONFIRMING"}
                     title="Cà vẹt xe"
                     name="image"
                     onChange={handleOnChange}
+                    defaultValue={(note && note.registryCertificate) || ""}
                 />
                 <div className="group__action">
                     {status === "CONFIRMING" ? (
@@ -100,14 +105,6 @@ const AmbulanceModal = ({
                                 Duyệt
                             </span>
                         </>
-                    ) : status === "ACTIVE" ? (
-                        <span className="grant">Chặn hoạt động</span>
-                    ) : status === "REJECTED" ? (
-                        <span onClick={handleAccept} className="accept">
-                            Duyệt
-                        </span>
-                    ) : status === "DEACTIVE" ? (
-                        <span className="grant">Mở hoạt động</span>
                     ) : null}
                 </div>
             </div>

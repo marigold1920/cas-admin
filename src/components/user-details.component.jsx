@@ -8,9 +8,6 @@ const UserDetails = ({ item, current, onClose, visible }) => (
         {item && (
             <>
                 <div className="header">
-                    <span className="row__action disable">
-                        {current === "drivers" ? "Chặn tài xế" : "Chặn người dùng"}
-                    </span>
                     <i onClick={onClose} className="far fa-times-circle"></i>
                 </div>
                 {current === "drivers" ? (
