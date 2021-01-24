@@ -12,7 +12,7 @@ const LoginPage = ({ login }) => {
     return (
         <div className="authentication">
             <div action="login" method="post" className="form__side">
-                <span className="header">Login with username and password</span>
+                <span className="header">Đăng nhập với tên tài khoản và mật khẩu</span>
                 <CustomInput
                     icon="far fa-user"
                     type="text"
@@ -30,7 +30,7 @@ const LoginPage = ({ login }) => {
                     onChange={value => setPassword(value)}
                 />
                 <button onClick={() => login(username, password)} className="action" type="submit">
-                    Login
+                    Đăng nhập
                 </button>
             </div>
         </div>

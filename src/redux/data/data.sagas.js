@@ -51,8 +51,10 @@ function* grantPermissionStart({ payload: { token, actor, itemId } }) {
     try {
         yield call(grantPermission, token, actor, itemId);
         yield put(grantPermissionSuccess(itemId));
+        yield put(updateStatusCode(202));
     } catch (error) {
         yield put(grantPermissionFail(error));
+        yield put(updateStatusCode(401));
     }
 }
 
@@ -60,9 +62,11 @@ function* updateConfigurationsStart({ payload: { token, configurations } }) {
     try {
         const response = yield call(updateConfigurations, token, configurations);
 
+        yield put(updateStatusCode(203));
         yield put(updateConfigurationsSuccess(response.data));
     } catch (error) {
         yield put(updateConfigurationsFail(error));
+        yield put(updateStatusCode(402));
     }
 }
 
@@ -82,6 +86,7 @@ function* rejectRegisterAmbulanceStart({ payload: { token, ambulanceId, note } }
         const response = yield call(rejectRegisterAmbulance, token, ambulanceId, note);
 
         yield put(rejectRegisterAmbulanceSuccess(ambulanceId, response.data));
+        yield put(updateStatusCode(201));
     } catch (error) {
         yield put(rejectRegisterAmbulanceFail(error));
     }

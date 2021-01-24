@@ -6,7 +6,7 @@ const api = axios.create({
 });
 
 export const fetchData = (actor, token) => {
-    return api.get(`/${actor}`, {
+    return api.get(`/${actor}?pageIndex=1&keyword=&status=`, {
         headers: {
             Authorization: token
         }

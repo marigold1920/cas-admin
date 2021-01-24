@@ -29,7 +29,7 @@ const AmbulanceRow = ({
             {status === "Đang hoạt động" && (
                 <i onClick={grantPermission} className="fas fa-minus-circle"></i>
             )}
-            {status === "Bị khóa hoạt động" && (
+            {status === "Ngưng hoạt động" && (
                 <i onClick={grantPermission} className="fas fa-check-circle"></i>
             )}
         </span>

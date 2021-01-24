@@ -17,7 +17,6 @@ import {
     selectIsPanel
 } from "../redux/data/data.selectors";
 import { modalMessages } from "../utils/modal-messages.data";
-import { selectStatusCode } from "../redux/message/message.selectors";
 
 import DashboardHeader from "./dashboard-header.component";
 import Filter from "./filter.component";
@@ -30,7 +29,6 @@ import RequestRow from "./request-row.component";
 import Spinner from "./spinner.component";
 import UserDetails from "./user-details.component";
 import MessageModal from "./message-modal.component";
-import SuccessModal from "./success-modal.component";
 
 const titles = {
     requesters: "Người gửi yêu cầu",
@@ -90,7 +88,6 @@ const DashBoard = ({
     data,
     token,
     isPanel,
-    statusCode,
     fetchItemDetails,
     clearItem,
     initItemId,
@@ -128,12 +125,9 @@ const DashBoard = ({
 
     return (
         <>
-            <section className={`dashboard ${confirmation || statusCode ? "blur" : ""}`}>
+            <section className={`dashboard ${confirmation ? "blur" : ""}`}>
                 <DashboardHeader title={titles[activeItem]} />
-                <Filter
-                    items={["Tất cả", "Đang hoạt động", "Ngưng hoạt động"]}
-                    activeItem="Tất cả"
-                />
+                <Filter items={["Tất cả"]} activeItem="Tất cả" />
                 <CustomTable>
                     <TableHeader items={headerItems[activeItem]} sizes={sizes[activeItem]} />
                     <Suspense fallback={<Spinner />}>
@@ -179,13 +173,11 @@ const DashBoard = ({
                 <Pagination totalPage={1} currentPage={1} />
             </section>
             <MessageModal
-                title="Chặn hoạt động"
                 message={modalMessages["deactive"]}
                 visible={confirmation}
                 onConfirm={() => handleConfirm(token, activeItem, currentItemId)}
                 onClose={handleOnClose}
             />
-            <SuccessModal />
         </>
     );
 };
@@ -196,8 +188,7 @@ const mapStateToProps = createStructuredSelector({
     currentItemId: selectCurrentItemId,
     token: selectToken,
     data: selectCurrentData,
-    isPanel: selectIsPanel,
-    statusCode: selectStatusCode
+    isPanel: selectIsPanel
 });
 
 const mapDispatchToProps = dispatch => ({
