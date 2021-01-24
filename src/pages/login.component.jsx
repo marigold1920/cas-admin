@@ -7,7 +7,7 @@ import CustomInput from "../components/custom-input.component";
 
 const LoginPage = ({ login }) => {
     const [username, setUsername] = useState("marigold1920");
-    const [password, setPassword] = useState("123");
+    const [password, setPassword] = useState("123456");
 
     return (
         <div className="authentication">
@@ -38,7 +38,7 @@ const LoginPage = ({ login }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    login: (username, password) => dispatch(login({ username, password }))
+    login: (username, password) => dispatch(login(username, password))
 });
 
 export default connect(null, mapDispatchToProps)(LoginPage);
