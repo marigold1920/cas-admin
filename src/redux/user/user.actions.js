@@ -1,9 +1,12 @@
 import UserActionTypes from "./user.types";
 
-export const login = user => ({
-    type: UserActionTypes.LOGIN_START,
-    payload: user
-});
+export const login = (username, password) => {
+    console.log(username, password);
+    return {
+        type: UserActionTypes.LOGIN_START,
+        payload: { username, password }
+    };
+};
 
 export const loginSuccess = user => ({
     type: UserActionTypes.LOGIN_SUCCESS,
