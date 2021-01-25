@@ -8,13 +8,17 @@ import {
     clearItem,
     fetchItemDetails,
     grantPermission,
-    initItemId
+    initItemId,
+    toggleLoading
 } from "../redux/data/data.actions";
 import {
     selectCurrentData,
     selectCurrentItem,
     selectCurrentItemId,
-    selectIsPanel
+    selectIsPanel,
+    selectTotalPage,
+    selectCurrentPage,
+    selectLoading
 } from "../redux/data/data.selectors";
 import { modalMessages } from "../utils/modal-messages.data";
 
@@ -42,18 +46,18 @@ const headerItems = {
         "Họ và tên",
         "Số điện thoại",
         "Ngày tạo",
-        "Trạng thái",
         "Số yêu cầu",
         "Tỉ lệ thành công",
+        "Trạng thái",
         "Hành động"
     ],
     drivers: [
         "Họ và tên",
         "Số điện thoại",
         "Ngày tạo",
-        "Trạng thái",
         "Số yêu cầu",
         "Tỉ lệ hoàn thành",
+        "Trạng thái",
         "Hành động"
     ],
     ambulances: [
@@ -75,8 +79,8 @@ const headerItems = {
     ]
 };
 const sizes = {
-    requesters: ["col__20", "col__10", "col__7", "col__10", "col__7", "col__10"],
-    drivers: ["col__20", "col__10", "col__7", "col__10", "col__7", "col__10"],
+    requesters: ["col__20", "col__10", "col__7", "col__7", "col__10", "col__10"],
+    drivers: ["col__20", "col__10", "col__7", "col__7", "col__10", "col__10"],
     ambulances: ["col__10", "col__25", "col__10", "col__15", "col__10"],
     requests: ["col__20", "col__20", "col__7", "col__13", "col__10", "col__13"]
 };
@@ -91,12 +95,20 @@ const DashBoard = ({
     fetchItemDetails,
     clearItem,
     initItemId,
-    grantPermission
+    grantPermission,
+    totalPage,
+    currentPage,
+    loading,
+    toggleLoading
 }) => {
     const [confirmation, setConfirmation] = useState(false);
 
     useEffect(() => {
         setConfirmation(false);
+        loading &&
+            setTimeout(() => {
+                toggleLoading();
+            }, 1500);
     }, [activeItem]);
 
     const handleSelectUser = itemId => {
@@ -130,39 +142,38 @@ const DashBoard = ({
                 <Filter items={["Tất cả"]} activeItem="Tất cả" />
                 <CustomTable>
                     <TableHeader items={headerItems[activeItem]} sizes={sizes[activeItem]} />
-                    <Suspense fallback={<Spinner />}>
-                        <div className={`table__content ${isPanel ? "deactive" : ""}`}>
-                            {data.length > 0
-                                ? data.map(({ itemId, ...otherProps }) =>
-                                      activeItem === "requesters" || activeItem === "drivers" ? (
-                                          <RequesterRow
-                                              viewDetails={() => handleSelectUser(itemId)}
-                                              grantPermission={() => handleGrantPermission(itemId)}
-                                              key={itemId}
-                                              {...otherProps}
-                                          />
-                                      ) : activeItem === "ambulances" ? (
-                                          <AmbulanceRow
-                                              viewDetails={() =>
-                                                  fetchItemDetails(token, activeItem, itemId)
-                                              }
-                                              grantPermission={() => handleGrantPermission(itemId)}
-                                              key={itemId}
-                                              {...otherProps}
-                                          />
-                                      ) : activeItem === "requests" ? (
-                                          <RequestRow
-                                              viewDetails={() =>
-                                                  fetchItemDetails(token, activeItem, itemId)
-                                              }
-                                              key={itemId}
-                                              {...otherProps}
-                                          />
-                                      ) : null
-                                  )
-                                : null}
-                        </div>
-                    </Suspense>
+                    {loading && <Spinner />}
+                    <div className={`table__content ${isPanel ? "deactive" : ""}`}>
+                        {data.length > 0
+                            ? data.map(({ id, ...otherProps }) =>
+                                  activeItem === "requesters" || activeItem === "drivers" ? (
+                                      <RequesterRow
+                                          viewDetails={() => handleSelectUser(id)}
+                                          grantPermission={() => handleGrantPermission(id)}
+                                          key={id}
+                                          {...otherProps}
+                                      />
+                                  ) : activeItem === "ambulances" ? (
+                                      <AmbulanceRow
+                                          viewDetails={() =>
+                                              fetchItemDetails(token, activeItem, id)
+                                          }
+                                          grantPermission={() => handleGrantPermission(id)}
+                                          key={id}
+                                          {...otherProps}
+                                      />
+                                  ) : activeItem === "requests" ? (
+                                      <RequestRow
+                                          viewDetails={() =>
+                                              fetchItemDetails(token, activeItem, id)
+                                          }
+                                          key={id}
+                                          {...otherProps}
+                                      />
+                                  ) : null
+                              )
+                            : null}
+                    </div>
                 </CustomTable>
                 <UserDetails
                     item={currentItem}
@@ -170,7 +181,7 @@ const DashBoard = ({
                     onClose={handleOnClosePanel}
                     visible={isPanel}
                 />
-                <Pagination totalPage={1} currentPage={1} />
+                <Pagination totalPage={totalPage} currentPage={currentPage} />
             </section>
             <MessageModal
                 message={modalMessages["deactive"]}
@@ -188,7 +199,10 @@ const mapStateToProps = createStructuredSelector({
     currentItemId: selectCurrentItemId,
     token: selectToken,
     data: selectCurrentData,
-    isPanel: selectIsPanel
+    isPanel: selectIsPanel,
+    totalPage: selectTotalPage,
+    currentPage: selectCurrentPage,
+    loading: selectLoading
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -196,7 +210,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(fetchItemDetails(token, actor, itemId, isPanel)),
     clearItem: () => dispatch(clearItem()),
     initItemId: itemId => dispatch(initItemId(itemId)),
-    grantPermission: (token, actor, itemId) => dispatch(grantPermission(token, actor, itemId))
+    grantPermission: (token, actor, itemId) => dispatch(grantPermission(token, actor, itemId)),
+    toggleLoading: () => dispatch(toggleLoading())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoard);

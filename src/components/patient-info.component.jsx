@@ -29,7 +29,7 @@ const PatientInfo = ({
                         />
                     )}
                     {morbidity && (
-                        <InfoItem customStyle="item" title="Tình trạng cấp cứu" value={morbidity} />
+                        <InfoItem customStyle="item" title="Tình trạng" value={morbidity} />
                     )}
                 </>
             )}

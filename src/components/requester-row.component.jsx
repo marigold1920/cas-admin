@@ -1,5 +1,10 @@
 import React from "react";
 
+const mapColor = {
+    1: { fg: "#33b4b5", bg: "rgba(79, 232, 233, 0.1)" },
+    0: { fg: "#e73b1d", bg: "rgba(231, 59, 29, 0.1)" }
+};
+
 const RequesterRow = ({
     displayName,
     imageUrl,
@@ -18,11 +23,24 @@ const RequesterRow = ({
         </span>
         <span className="table__content__col col__10">{phone}</span>
         <span className="table__content__col col__7">{dateCreated}</span>
-        <span className="table__content__col col__10">
-            {status ? "Đang hoạt động" : "Ngưng hoạt động"}
-        </span>
         <span className="table__content__col col__7">{numOfRequests}</span>
-        <span className="table__content__col col__10">{successRate ? `${successRate}%` : "-"}</span>
+        <span className="table__content__col col__10">
+            {successRate ? `${successRate.toFixed(2)}%` : "Đang cập nhật"}
+        </span>
+        <span className="table__content__col col__10 status">
+            {displayName ? (
+                <span
+                    className="status__value"
+                    style={{
+                        color: mapColor[status].fg,
+                        background: mapColor[status].bg,
+                        fontWeight: "bold"
+                    }}
+                >
+                    {status ? "Đang hoạt động" : "Ngưng hoạt động"}
+                </span>
+            ) : null}
+        </span>
         <span className="table__content__action">
             <i onClick={viewDetails} className="fas fa-info-circle"></i>
             <i

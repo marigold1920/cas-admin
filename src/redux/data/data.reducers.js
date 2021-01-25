@@ -6,7 +6,10 @@ const INITIAL_STATE = {
     error: null,
     currentItem: null,
     currentItemId: null,
-    isPanel: false
+    isPanel: false,
+    totalPage: 1,
+    currentPage: 1,
+    loading: false
 };
 
 const dataReducer = (state = INITIAL_STATE, action) => {
@@ -14,7 +17,19 @@ const dataReducer = (state = INITIAL_STATE, action) => {
         case DataActionTypes.FETCH_DATA_SUCCESS:
             return {
                 ...state,
-                data: action.payload
+                data: action.payload.data,
+                totalPage: action.payload.totalPage,
+                currentPage: action.payload.currentPage
+            };
+        case DataActionTypes.CLEAR_DATA:
+            return {
+                ...state,
+                data: []
+            };
+        case DataActionTypes.TOGGLE_LOADING:
+            return {
+                ...state,
+                loading: !state.loading
             };
         case DataActionTypes.FETCH_ITEM_DETAILS_SUCCESS:
             return {

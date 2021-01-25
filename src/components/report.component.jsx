@@ -37,7 +37,10 @@ const Report = ({ data, token, updateConfigurations }) => {
                     <div className="details">
                         <StatusReport
                             icon="https://i.ibb.co/7QKnkq9/success.png"
-                            value={`${(data.successRate * 100).toFixed(2)}%` || "Đang cập nhật"}
+                            value={
+                                `${data.successRate && data.successRate.toFixed(2)}%` ||
+                                "Đang cập nhật"
+                            }
                             description="Yêu cầu được thực hiện"
                             name="Thành công"
                         />
@@ -54,8 +57,8 @@ const Report = ({ data, token, updateConfigurations }) => {
                     <div className="ambulance">
                         {data.ambulances &&
                             data.ambulances.length > 0 &&
-                            data.ambulances.map(({ itemId, ...otherProps }) => (
-                                <AmbulanceRowReport key={itemId} {...otherProps} />
+                            data.ambulances.map(({ id, ...otherProps }) => (
+                                <AmbulanceRowReport key={id} {...otherProps} />
                             ))}
                     </div>
                 </div>

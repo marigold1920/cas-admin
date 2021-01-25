@@ -12,7 +12,6 @@ import { modalMessages } from "../utils/modal-messages.data";
 
 import RegisteredImage from "./registered-image.component";
 import MessageModal from "./message-modal.component";
-import { approveRegisterAmbulance, denyRegisterAmbulance } from "../firebase/firebase.utils";
 
 const AmbulanceModal = ({
     item: {
@@ -45,16 +44,14 @@ const AmbulanceModal = ({
 
     const handleAccept = () => {
         clearItem();
-        acceptRegisterAmbulance(token, ambulanceId);
-        approveRegisterAmbulance(username);
+        acceptRegisterAmbulance(token, username, ambulanceId);
     };
 
     const handleDeny = () => {
         const isEmpty = !Object.values(_note).some(x => x !== "");
         if (!isEmpty) {
             clearItem();
-            denyRegisterAmbulance(username);
-            rejectRegisterAmbulance(token, ambulanceId, _note);
+            rejectRegisterAmbulance(token, username, ambulanceId, _note);
         } else {
             setWarning(true);
         }
@@ -124,10 +121,10 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    acceptRegisterAmbulance: (token, ambulanceId) =>
-        dispatch(acceptRegisterAmbulance(token, ambulanceId)),
-    rejectRegisterAmbulance: (token, ambulanceId, note) =>
-        dispatch(rejectRegisterAmbulance(token, ambulanceId, note)),
+    acceptRegisterAmbulance: (token, username, ambulanceId) =>
+        dispatch(acceptRegisterAmbulance(token, username, ambulanceId)),
+    rejectRegisterAmbulance: (token, username, ambulanceId, note) =>
+        dispatch(rejectRegisterAmbulance(token, username, ambulanceId, note)),
     clearItem: () => dispatch(clearItem())
 });
 

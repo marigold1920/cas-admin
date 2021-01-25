@@ -5,8 +5,8 @@ const api = axios.create({
     // baseURL: "http://caselastic-env-1.eba-rh86ed2y.ap-southeast-1.elasticbeanstalk.com/api/admin"
 });
 
-export const fetchData = (actor, token) => {
-    return api.get(`/${actor}?pageIndex=1&keyword=&status=`, {
+export const fetchData = (actor, token, pageIndex) => {
+    return api.get(`/${actor}?pageIndex=${pageIndex}&keyword=&status=`, {
         headers: {
             Authorization: token
         }
@@ -37,16 +37,16 @@ export const updateConfigurations = (token, configurations) => {
     });
 };
 
-export const acceptRegisterAmbulance = (token, ambulanceId) => {
-    return api.get(`/ambulances/accept/${ambulanceId}`, {
+export const acceptRegisterAmbulance = (token, username, ambulanceId) => {
+    return api.get(`/ambulances/accept/${ambulanceId}?username=${username}`, {
         headers: {
             Authorization: token
         }
     });
 };
 
-export const rejectRegisterAmbulance = (token, ambulanceId, note) => {
-    return api.post(`/ambulances/reject/${ambulanceId}`, note, {
+export const rejectRegisterAmbulance = (token, username, ambulanceId, note) => {
+    return api.post(`/ambulances/reject/${ambulanceId}?username=${username}`, note, {
         headers: {
             Authorization: token
         }
