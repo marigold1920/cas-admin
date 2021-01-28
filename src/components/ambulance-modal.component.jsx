@@ -62,7 +62,7 @@ const AmbulanceModal = ({
             <div className="registered__profile">
                 <RegisteredImage
                     imageUrl={identityCard}
-                    isActive={status === "CONFIRMING"}
+                    isActive={status !== "CANCELED"}
                     title="Chứng minh nhân dân"
                     name="identityCard"
                     onChange={handleOnChange}
@@ -70,7 +70,7 @@ const AmbulanceModal = ({
                 />
                 <RegisteredImage
                     imageUrl={driverLicense}
-                    isActive={status === "CONFIRMING"}
+                    isActive={status !== "CANCELED"}
                     title="Giấy phép lái xe"
                     name="driverLicense"
                     onChange={handleOnChange}
@@ -78,7 +78,7 @@ const AmbulanceModal = ({
                 />
                 <RegisteredImage
                     imageUrl={registerLicense}
-                    isActive={status === "CONFIRMING"}
+                    isActive={status !== "CANCELED"}
                     title="Giấy đăng kiểm"
                     name="registerLicense"
                     onChange={handleOnChange}
@@ -86,7 +86,7 @@ const AmbulanceModal = ({
                 />
                 <RegisteredImage
                     imageUrl={registryCertificate}
-                    isActive={status === "CONFIRMING"}
+                    isActive={status !== "CANCELED"}
                     title="Cà vẹt xe"
                     name="registryCertificate"
                     onChange={handleOnChange}
@@ -102,6 +102,11 @@ const AmbulanceModal = ({
                                 Duyệt
                             </span>
                         </>
+                    ) : null}
+                    {status === "ACTIVE" ? (
+                        <span onClick={handleDeny} className="deny">
+                            Không hợp lệ
+                        </span>
                     ) : null}
                 </div>
             </div>
