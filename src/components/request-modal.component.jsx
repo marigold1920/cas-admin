@@ -19,7 +19,7 @@ const RequestModal = ({ item }) => (
             <Place item={item.pickUp} title="Điểm đón" icon="fa-map-marker-alt" />
             <Place item={item.destination} title="Điểm đến" icon="fa-map-pin" />
         </div>
-        <span className="content__title">Thông tin bệnh khách</span>
+        <span className="content__title">Thông tin người gửi yêu cầu</span>
         <PatientInfo item={item} />
         <span className="content__title">Thông tin xe và tài xế</span>
         <DriverInfo item={item} />

@@ -13,38 +13,35 @@ import AmbulanceRowReport from "./ambulance-row-report.component";
 
 const Report = ({ data, token, updateConfigurations }) => {
     const [configurations, setConfigurations] = useState([]);
-    const [config, setConfig] = useState(null);
     const [validation, setValidation] = useState({});
-    const mapKey = {
-        1: "requestTimeout",
-        2: "termTimeout",
-        3: "radius",
-        4: "extraRadius",
-        5: "maxRadius"
-    };
 
     useEffect(() => {
         if (data.configurations) {
-            const config = data.configurations.reduce((acc, cur) => {
-                return {
-                    ...acc,
-                    [mapKey[cur.itemId]]: Number.parseInt(cur.value)
-                };
-            }, {});
-
-            setConfig(config);
             setConfigurations(data.configurations);
         }
     }, [data]);
 
     const handleOnChange = (itemId, value) => {
-        setConfigurations(
-            configurations.map(item => (item.itemId === itemId ? { ...item, value } : item))
-        );
+        const config = configurations.find(item => item.itemId === itemId);
+
+        if (value.match(/^\d+$/) && value <= config.max && value >= config.min) {
+            setConfigurations(
+                configurations.map(item => (item.itemId === itemId ? { ...item, value } : item))
+            );
+        } else {
+            setValidation({
+                ...validation,
+                [itemId]: `Giá trị phải là số nguyên nằm trong khoảng ${config.min} - ${config.max}`
+            });
+        }
     };
 
     const handleUpdateConfigurations = event => {
         event.preventDefault();
+        if (Object.values(validation).some(x => x !== "" || x !== null)) {
+            return;
+        }
+
         updateConfigurations(token, configurations);
     };
 
@@ -94,9 +91,14 @@ const Report = ({ data, token, updateConfigurations }) => {
                                 placeholder="5"
                                 type="number"
                                 defaultValue={value}
-                                onChange={e => handleOnChange(itemId, e.target.value)}
+                                onChange={e => {
+                                    setValidation({ ...validation, [itemId]: null });
+                                    handleOnChange(itemId, e.target.value);
+                                }}
                                 min={min}
                                 max={max}
+                                validation={validation}
+                                itemId={itemId}
                             />
                         ))}
                     <button type="submit" onClick={handleUpdateConfigurations} className="save">

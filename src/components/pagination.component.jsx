@@ -28,9 +28,6 @@ const Pagination = ({
                         filterItem === "Tất cả" ? "" : filterItem,
                         keyword
                     );
-                    setTimeout(() => {
-                        toggleLoading();
-                    }, 750);
                 }}
                 key={index}
                 className={`pagination__item ${currentPage === index + 1 ? "active" : ""}`}
