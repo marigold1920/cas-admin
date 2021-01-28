@@ -233,7 +233,8 @@ a {
     background: #f2f5fa;
     border: none;
     outline: none;
-    padding: 10px 20px;
+    padding: 10px;
+    padding-left: 45px;
     font-size: 1.05rem;
     color: #6c6c6c;
     border-radius: 30px;
@@ -241,9 +242,10 @@ a {
 
 .search__box i {
     position: absolute;
-    right: 15px;
+    left: 15px;
     font-size: 1.05rem;
     color: #6c6c6c;
+    cursor: pointer;
 }
 
 .admin {
@@ -290,6 +292,7 @@ a {
     font-weight: bold;
     position: relative;
     padding-bottom: 10px;
+    cursor: pointer;
 }
 
 .filter .filter__item.active::before {
@@ -362,6 +365,10 @@ a {
 
 .col__15 {
     width: 18%;
+}
+
+.col__23 {
+    width: 25%;
 }
 
 .col__25 {
@@ -1330,10 +1337,13 @@ a {
 }
 
 .status {
-    display: inline-flex;
+    display: flex;
 }
 
 .status__value {
+    font-size: 0.95rem;
     padding: 4px 25px 4px 25px;
     border-radius: 20px;
+    flex-basis: 85%;
+    text-align: center;
 }

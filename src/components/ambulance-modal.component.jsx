@@ -33,7 +33,7 @@ const AmbulanceModal = ({
         identityCard: "",
         driverLicense: "",
         registerLicense: "",
-        image: ""
+        registryCertificate: ""
     });
     const [warning, setWarning] = useState(false);
 
@@ -88,7 +88,7 @@ const AmbulanceModal = ({
                     imageUrl={registryCertificate}
                     isActive={status === "CONFIRMING"}
                     title="Cà vẹt xe"
-                    name="image"
+                    name="registryCertificate"
                     onChange={handleOnChange}
                     defaultValue={(note && note.registryCertificate) || ""}
                 />

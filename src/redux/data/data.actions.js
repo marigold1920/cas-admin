@@ -1,12 +1,8 @@
 import DataActionTypes from "./data.types";
 
-export const fetchData = (actor, token, pageIndex) => ({
+export const fetchData = (actor, token, pageIndex, status, keyword) => ({
     type: DataActionTypes.FETCH_DATA_START,
-    payload: {
-        actor,
-        token,
-        pageIndex
-    }
+    payload: { actor, token, pageIndex, status, keyword }
 });
 
 export const clearData = () => ({

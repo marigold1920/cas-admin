@@ -1,8 +1,10 @@
 import React from "react";
 
 const mapColor = {
-    1: { fg: "#33b4b5", bg: "rgba(79, 232, 233, 0.1)" },
-    0: { fg: "#e73b1d", bg: "rgba(231, 59, 29, 0.1)" }
+    1: { fg: "#00cc3a", bg: "rgba(0, 204, 58, 0.1)" },
+    true: { fg: "#00cc3a", bg: "rgba(0, 204, 58, 0.1)" },
+    0: { fg: "#e73b1d", bg: "rgba(231, 59, 29, 0.1)" },
+    false: { fg: "#e73b1d", bg: "rgba(231, 59, 29, 0.1)" }
 };
 
 const RequesterRow = ({
@@ -22,7 +24,9 @@ const RequesterRow = ({
             <span className="name">{displayName}</span>
         </span>
         <span className="table__content__col col__10">{phone}</span>
-        <span className="table__content__col col__7">{dateCreated}</span>
+        <span className="table__content__col col__7">
+            {new Date(dateCreated).toLocaleDateString("vi-VN")}
+        </span>
         <span className="table__content__col col__7">{numOfRequests}</span>
         <span className="table__content__col col__10">
             {successRate ? `${successRate.toFixed(2)}%` : "Đang cập nhật"}

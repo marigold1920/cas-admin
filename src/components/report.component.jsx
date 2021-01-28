@@ -13,9 +13,28 @@ import AmbulanceRowReport from "./ambulance-row-report.component";
 
 const Report = ({ data, token, updateConfigurations }) => {
     const [configurations, setConfigurations] = useState([]);
+    const [config, setConfig] = useState(null);
+    const [validation, setValidation] = useState({});
+    const mapKey = {
+        1: "requestTimeout",
+        2: "termTimeout",
+        3: "radius",
+        4: "extraRadius",
+        5: "maxRadius"
+    };
 
     useEffect(() => {
-        data.configurations && setConfigurations(data.configurations);
+        if (data.configurations) {
+            const config = data.configurations.reduce((acc, cur) => {
+                return {
+                    ...acc,
+                    [mapKey[cur.itemId]]: Number.parseInt(cur.value)
+                };
+            }, {});
+
+            setConfig(config);
+            setConfigurations(data.configurations);
+        }
     }, [data]);
 
     const handleOnChange = (itemId, value) => {
@@ -24,7 +43,8 @@ const Report = ({ data, token, updateConfigurations }) => {
         );
     };
 
-    const handleUpdateConfigurations = () => {
+    const handleUpdateConfigurations = event => {
+        event.preventDefault();
         updateConfigurations(token, configurations);
     };
 
@@ -64,7 +84,7 @@ const Report = ({ data, token, updateConfigurations }) => {
                 </div>
             </div>
             <div className="system">
-                <div className="config">
+                <form className="config">
                     <span className="title">Thiết lập hệ thống</span>
                     {configurations.length > 0 &&
                         configurations.map(({ itemId, description, value, min, max }) => (
@@ -79,10 +99,10 @@ const Report = ({ data, token, updateConfigurations }) => {
                                 max={max}
                             />
                         ))}
-                    <span onClick={handleUpdateConfigurations} className="save">
+                    <button type="submit" onClick={handleUpdateConfigurations} className="save">
                         Lưu thay đổi
-                    </span>
-                </div>
+                    </button>
+                </form>
             </div>
         </div>
     );

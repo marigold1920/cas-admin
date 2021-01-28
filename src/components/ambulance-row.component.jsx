@@ -1,9 +1,8 @@
 import React from "react";
 
 const mapColor = {
-    "Đang hoạt động": { fg: "#126454", bg: "rgba(14, 100, 84, 0.1)" },
-    "Hủy đăng ký": { fg: "#e73b1d", bg: "rgba(231, 59, 29, 0.1)" },
-    "Bị hủy bỏ": { fg: "#e73b1d", bg: "rgba(231, 59, 29, 0.1)" },
+    "Đang hoạt động": { fg: "#00cc3a", bg: "rgba(0, 204, 58, 0.1)" },
+    "Đã hủy đăng ký": { fg: "#e73b1d", bg: "rgba(231, 59, 29, 0.1)" },
     "Chờ xác nhận": { fg: "#4fe8e9", bg: "rgba(79, 168, 233, 0.1)" }
 };
 

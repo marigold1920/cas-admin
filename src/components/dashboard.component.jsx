@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
@@ -21,6 +21,7 @@ import {
     selectLoading
 } from "../redux/data/data.selectors";
 import { modalMessages } from "../utils/modal-messages.data";
+import { titles, headerItems, sizes } from "../utils/title.data";
 
 import DashboardHeader from "./dashboard-header.component";
 import Filter from "./filter.component";
@@ -33,57 +34,6 @@ import RequestRow from "./request-row.component";
 import Spinner from "./spinner.component";
 import UserDetails from "./user-details.component";
 import MessageModal from "./message-modal.component";
-
-const titles = {
-    requesters: "Người gửi yêu cầu",
-    drivers: "Tài xế",
-    ambulances: "Xe cứu thương",
-    requests: "Yêu cầu"
-};
-
-const headerItems = {
-    requesters: [
-        "Họ và tên",
-        "Số điện thoại",
-        "Ngày tạo",
-        "Số yêu cầu",
-        "Tỉ lệ thành công",
-        "Trạng thái",
-        "Hành động"
-    ],
-    drivers: [
-        "Họ và tên",
-        "Số điện thoại",
-        "Ngày tạo",
-        "Số yêu cầu",
-        "Tỉ lệ hoàn thành",
-        "Trạng thái",
-        "Hành động"
-    ],
-    ambulances: [
-        "Biển số xe",
-        "Người đăng ký",
-        "Ngày đăng ký",
-        "Ngày hủy hợp đồng",
-        "Trạng thái",
-        "Hành động"
-    ],
-    requests: [
-        "Người gửi",
-        "Tài xế",
-        "Biển số xe",
-        "Loại yêu cầu",
-        "Loại vận chuyển",
-        "Trạng thái",
-        "Hành động"
-    ]
-};
-const sizes = {
-    requesters: ["col__20", "col__10", "col__7", "col__7", "col__10", "col__10"],
-    drivers: ["col__20", "col__10", "col__7", "col__7", "col__10", "col__10"],
-    ambulances: ["col__10", "col__25", "col__10", "col__15", "col__10"],
-    requests: ["col__20", "col__20", "col__7", "col__13", "col__10", "col__13"]
-};
 
 const DashBoard = ({
     activeItem,
@@ -108,8 +58,8 @@ const DashBoard = ({
         loading &&
             setTimeout(() => {
                 toggleLoading();
-            }, 1500);
-    }, [activeItem]);
+            }, 750);
+    }, [activeItem, loading, toggleLoading]);
 
     const handleSelectUser = itemId => {
         const state = true;
@@ -139,7 +89,7 @@ const DashBoard = ({
         <>
             <section className={`dashboard ${confirmation ? "blur" : ""}`}>
                 <DashboardHeader title={titles[activeItem]} />
-                <Filter items={["Tất cả"]} activeItem="Tất cả" />
+                <Filter />
                 <CustomTable>
                     <TableHeader items={headerItems[activeItem]} sizes={sizes[activeItem]} />
                     {loading && <Spinner />}

@@ -5,8 +5,8 @@ const api = axios.create({
     // baseURL: "http://caselastic-env-1.eba-rh86ed2y.ap-southeast-1.elasticbeanstalk.com/api/admin"
 });
 
-export const fetchData = (actor, token, pageIndex) => {
-    return api.get(`/${actor}?pageIndex=${pageIndex}&keyword=&status=`, {
+export const fetchData = (actor, token, pageIndex, status, keyword) => {
+    return api.get(`/${actor}?pageIndex=${pageIndex}&keyword=${keyword}&status=${status}`, {
         headers: {
             Authorization: token
         }

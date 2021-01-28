@@ -27,9 +27,9 @@ import {
 
 import DataActionTypes from "./data.types";
 
-function* fetchDataStart({ payload: { actor, token, pageIndex } }) {
+function* fetchDataStart({ payload: { actor, token, pageIndex, status, keyword } }) {
     try {
-        const response = yield call(fetchData, actor, token, pageIndex || 1);
+        const response = yield call(fetchData, actor, token, pageIndex || 1, status, keyword || "");
 
         yield put(fetchDataSuccess(response.data));
     } catch (error) {
