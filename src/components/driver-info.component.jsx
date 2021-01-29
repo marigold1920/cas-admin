@@ -7,11 +7,11 @@ const DriverInfo = ({ item: { driverName, driverRating, ambulanceImages, license
         <div className="section__info__item">
             <span className="title">Tài xế</span>
             <Rating level={driverRating} />
-            <span className="driver__name">{driverName}</span>
+            <span className="driver__name">{driverName || "Không có thông tin"}</span>
         </div>
         <div className="section__info__item">
             <span className="title">Thông tin xe</span>
-            <span className="license__plate">{licensePlate}</span>
+            <span className="license__plate">{licensePlate || "Không có thông tin"}</span>
         </div>
     </div>
 );
