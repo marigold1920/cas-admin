@@ -38,10 +38,12 @@ const Report = ({ data, token, updateConfigurations }) => {
 
     const handleUpdateConfigurations = event => {
         event.preventDefault();
-        if (Object.values(validation).some(x => x !== "" || x !== null)) {
+        
+        if (Object.values(validation).some(x => x === "" || x !== null)) {
+            console.log("Fail: " + validation);
             return;
         }
-
+        console.log("Success: " + validation);
         updateConfigurations(token, configurations);
     };
 
