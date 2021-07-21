@@ -1,9 +1,9 @@
 import React from "react";
+import loading from "../assets/loading.gif";
 
 const Spinner = () => (
     <div className="spinner">
-        <img className="outer" src="./icons/loading.gif" alt="spinner" />
-        <img className="inner" src="./icons/loading-inner.gif" alt="inner spinner" />
+        <img width={240} height={180} src={loading} alt="loading" />
     </div>
 );
 

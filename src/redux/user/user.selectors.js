@@ -6,5 +6,5 @@ export const selectCurrentUser = createSelector([selectUser], user => user.curre
 
 export const selectToken = createSelector(
     [selectCurrentUser],
-    currentUser => (currentUser && `${currentUser.type} ${currentUser.token}`) || ""
+    currentUser => (currentUser && `Bearer ${currentUser.token}`) || ""
 );

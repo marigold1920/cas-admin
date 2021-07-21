@@ -13,18 +13,37 @@ import AmbulanceRowReport from "./ambulance-row-report.component";
 
 const Report = ({ data, token, updateConfigurations }) => {
     const [configurations, setConfigurations] = useState([]);
+    const [validation, setValidation] = useState({});
 
     useEffect(() => {
-        data.configurations && setConfigurations(data.configurations);
+        if (data.configurations) {
+            setConfigurations(data.configurations);
+        }
     }, [data]);
 
     const handleOnChange = (itemId, value) => {
-        setConfigurations(
-            configurations.map(item => (item.itemId === itemId ? { ...item, value } : item))
-        );
+        const config = configurations.find(item => item.itemId === itemId);
+
+        if (value.match(/^\d+$/) && value <= config.max && value >= config.min) {
+            setConfigurations(
+                configurations.map(item => (item.itemId === itemId ? { ...item, value } : item))
+            );
+        } else {
+            setValidation({
+                ...validation,
+                [itemId]: `Giá trị phải là số nguyên nằm trong khoảng ${config.min} - ${config.max}`
+            });
+        }
     };
 
-    const handleUpdateConfigurations = () => {
+    const handleUpdateConfigurations = event => {
+        event.preventDefault();
+        
+        if (Object.values(validation).some(x => x === "" || x !== null)) {
+            console.log("Fail: " + validation);
+            return;
+        }
+        console.log("Success: " + validation);
         updateConfigurations(token, configurations);
     };
 
@@ -37,7 +56,10 @@ const Report = ({ data, token, updateConfigurations }) => {
                     <div className="details">
                         <StatusReport
                             icon="https://i.ibb.co/7QKnkq9/success.png"
-                            value={`${(data.successRate * 100).toFixed(2)}%` || "Đang cập nhật"}
+                            value={
+                                `${data.successRate && data.successRate.toFixed(2)}%` ||
+                                "Đang cập nhật"
+                            }
                             description="Yêu cầu được thực hiện"
                             name="Thành công"
                         />
@@ -54,14 +76,14 @@ const Report = ({ data, token, updateConfigurations }) => {
                     <div className="ambulance">
                         {data.ambulances &&
                             data.ambulances.length > 0 &&
-                            data.ambulances.map(({ itemId, ...otherProps }) => (
-                                <AmbulanceRowReport key={itemId} {...otherProps} />
+                            data.ambulances.map(({ id, ...otherProps }) => (
+                                <AmbulanceRowReport key={id} {...otherProps} />
                             ))}
                     </div>
                 </div>
             </div>
             <div className="system">
-                <div className="config">
+                <form className="config">
                     <span className="title">Thiết lập hệ thống</span>
                     {configurations.length > 0 &&
                         configurations.map(({ itemId, description, value, min, max }) => (
@@ -71,15 +93,20 @@ const Report = ({ data, token, updateConfigurations }) => {
                                 placeholder="5"
                                 type="number"
                                 defaultValue={value}
-                                onChange={e => handleOnChange(itemId, e.target.value)}
+                                onChange={e => {
+                                    setValidation({ ...validation, [itemId]: null });
+                                    handleOnChange(itemId, e.target.value);
+                                }}
                                 min={min}
                                 max={max}
+                                validation={validation}
+                                itemId={itemId}
                             />
                         ))}
-                    <span onClick={handleUpdateConfigurations} className="save">
+                    <button type="submit" onClick={handleUpdateConfigurations} className="save">
                         Lưu thay đổi
-                    </span>
-                </div>
+                    </button>
+                </form>
             </div>
         </div>
     );

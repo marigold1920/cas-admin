@@ -31,7 +31,8 @@
     align-items: center;
     justify-content: center;
     font-size: 0.85rem;
-    background-image: url(https://i.ibb.co/b3BW0Nh/background-main.png);
+    /* background-image: url(https://i.ibb.co/b3BW0Nh/background-main.png); */
+    background-color: #fff;
 }
 
 a {
@@ -232,7 +233,8 @@ a {
     background: #f2f5fa;
     border: none;
     outline: none;
-    padding: 10px 20px;
+    padding: 10px;
+    padding-left: 45px;
     font-size: 1.05rem;
     color: #6c6c6c;
     border-radius: 30px;
@@ -240,9 +242,10 @@ a {
 
 .search__box i {
     position: absolute;
-    right: 15px;
+    left: 15px;
     font-size: 1.05rem;
     color: #6c6c6c;
+    cursor: pointer;
 }
 
 .admin {
@@ -289,6 +292,7 @@ a {
     font-weight: bold;
     position: relative;
     padding-bottom: 10px;
+    cursor: pointer;
 }
 
 .filter .filter__item.active::before {
@@ -301,7 +305,7 @@ a {
 
 /*-----------------------  Table content -----------------------*/
 .custom__table {
-    flex-basis: 75%;
+    flex-basis: 76%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -363,6 +367,10 @@ a {
     width: 18%;
 }
 
+.col__23 {
+    width: 25%;
+}
+
 .col__25 {
     width: 20%;
 }
@@ -371,11 +379,6 @@ a {
 .table__content__col {
     font-size: 1.05rem;
     font-weight: bold;
-}
-
-.table__header:first-child,
-.table__content__col:first-child {
-    padding-left: 30px;
 }
 
 .col__mix {
@@ -472,6 +475,7 @@ a {
     font-size: 0.95rem;
     font-weight: bold;
     margin: 0 10px;
+    cursor: pointer;
 }
 
 .pagination__item.active {
@@ -1060,10 +1064,15 @@ a {
     margin-top: 10px;
 }
 
-.registered__item img {
+.registered__item a {
     width: 85%;
     height: 250px;
     border-radius: 10px;
+}
+
+.registered__item a img {
+    width: 100%;
+    height: 100%;
 }
 
 .registered__item .image__title {
@@ -1071,22 +1080,23 @@ a {
     font-size: 0.95rem;
 }
 
-.registered__item input {
+.registered__item textarea {
     width: 85%;
     padding: 10px 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     outline: none;
     border: none;
     background: #f2f5fa;
     margin-top: 10px;
     font-size: 0.95rem;
+    resize: vertical;
 }
 
 .registered__profile .group__action {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .registered__profile .group__action span {
@@ -1324,4 +1334,22 @@ a {
     stroke: #191919;
     stroke-width: 15;
     stroke-linecap: round;
+}
+
+.noInfo {
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #666;
+}
+
+.status {
+    display: flex;
+}
+
+.status__value {
+    font-size: 0.95rem;
+    padding: 4px 25px 4px 25px;
+    border-radius: 20px;
+    flex-basis: 85%;
+    text-align: center;
 }

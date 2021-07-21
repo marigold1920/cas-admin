@@ -12,9 +12,9 @@ const UserDetails = ({ item, current, onClose, visible }) => (
                 </div>
                 {current === "drivers" ? (
                     <DriverDetails item={item} />
-                ) : (
+                ) : current === "requesters" ? (
                     <RequesterDetails item={item} />
-                )}
+                ) : null}
             </>
         )}
     </div>

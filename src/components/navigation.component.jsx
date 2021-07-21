@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import { setActiveItem } from "../redux/table/table.actions";
+import { setActiveItem, setKeyword } from "../redux/table/table.actions";
 import { selectActiveItem } from "../redux/table/table.selectors";
-import { clearItem } from "../redux/data/data.actions";
+import { clearItem, toggleLoading } from "../redux/data/data.actions";
 
 import ApplicationName from "./application-name.component";
 import NavigationItem from "./navigation-item.component";
 
-const Navigation = ({ activeItem, setActiveItem, clearItem }) => {
+const Navigation = ({ activeItem, setActiveItem, clearItem, toggleLoading, setKeyword }) => {
     const items = [
         { route: "reports", icon: "fas fa-chart-line" },
         { route: "requests", label: "Yêu cầu", icon: "fas fa-history" },
@@ -20,8 +20,10 @@ const Navigation = ({ activeItem, setActiveItem, clearItem }) => {
     ];
 
     const handleOnClick = route => {
+        setKeyword("");
         clearItem();
         setActiveItem(route);
+        toggleLoading();
     };
 
     return (
@@ -42,7 +44,9 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     setActiveItem: label => dispatch(setActiveItem(label)),
-    clearItem: () => dispatch(clearItem())
+    clearItem: () => dispatch(clearItem()),
+    toggleLoading: () => dispatch(toggleLoading()),
+    setKeyword: keyword => dispatch(setKeyword(keyword))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

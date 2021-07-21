@@ -14,7 +14,7 @@ import SuccessModal from "../components/success-modal.component";
 
 const HomePage = ({ activeItem, token, statusCode, fetchData }) => {
     useEffect(() => {
-        fetchData(activeItem, token);
+        fetchData(activeItem, token, 1, "", "");
     }, [fetchData, token, activeItem]);
 
     return (
@@ -35,7 +35,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchData: (activeItem, token) => dispatch(fetchData(activeItem, token))
+    fetchData: (activeItem, token, pageIndex, status, keyword) =>
+        dispatch(fetchData(activeItem, token, pageIndex, status, keyword))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

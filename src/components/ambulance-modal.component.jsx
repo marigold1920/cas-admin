@@ -12,7 +12,6 @@ import { modalMessages } from "../utils/modal-messages.data";
 
 import RegisteredImage from "./registered-image.component";
 import MessageModal from "./message-modal.component";
-import { approveRegisterAmbulance, denyRegisterAmbulance } from "../firebase/firebase.utils";
 
 const AmbulanceModal = ({
     item: {
@@ -34,7 +33,7 @@ const AmbulanceModal = ({
         identityCard: "",
         driverLicense: "",
         registerLicense: "",
-        image: ""
+        registryCertificate: ""
     });
     const [warning, setWarning] = useState(false);
 
@@ -45,16 +44,14 @@ const AmbulanceModal = ({
 
     const handleAccept = () => {
         clearItem();
-        acceptRegisterAmbulance(token, ambulanceId);
-        approveRegisterAmbulance(username);
+        acceptRegisterAmbulance(token, username, ambulanceId);
     };
 
     const handleDeny = () => {
         const isEmpty = !Object.values(_note).some(x => x !== "");
         if (!isEmpty) {
             clearItem();
-            denyRegisterAmbulance(username);
-            rejectRegisterAmbulance(token, ambulanceId, _note);
+            rejectRegisterAmbulance(token, username, ambulanceId, _note);
         } else {
             setWarning(true);
         }
@@ -65,7 +62,7 @@ const AmbulanceModal = ({
             <div className="registered__profile">
                 <RegisteredImage
                     imageUrl={identityCard}
-                    isActive={status === "CONFIRMING"}
+                    isActive={status !== "CANCELED"}
                     title="Chứng minh nhân dân"
                     name="identityCard"
                     onChange={handleOnChange}
@@ -73,7 +70,7 @@ const AmbulanceModal = ({
                 />
                 <RegisteredImage
                     imageUrl={driverLicense}
-                    isActive={status === "CONFIRMING"}
+                    isActive={status !== "CANCELED"}
                     title="Giấy phép lái xe"
                     name="driverLicense"
                     onChange={handleOnChange}
@@ -81,7 +78,7 @@ const AmbulanceModal = ({
                 />
                 <RegisteredImage
                     imageUrl={registerLicense}
-                    isActive={status === "CONFIRMING"}
+                    isActive={status !== "CANCELED"}
                     title="Giấy đăng kiểm"
                     name="registerLicense"
                     onChange={handleOnChange}
@@ -89,9 +86,9 @@ const AmbulanceModal = ({
                 />
                 <RegisteredImage
                     imageUrl={registryCertificate}
-                    isActive={status === "CONFIRMING"}
+                    isActive={status !== "CANCELED"}
                     title="Cà vẹt xe"
-                    name="image"
+                    name="registryCertificate"
                     onChange={handleOnChange}
                     defaultValue={(note && note.registryCertificate) || ""}
                 />
@@ -105,6 +102,11 @@ const AmbulanceModal = ({
                                 Duyệt
                             </span>
                         </>
+                    ) : null}
+                    {status === "ACTIVE" ? (
+                        <span onClick={handleDeny} className="deny">
+                            Không hợp lệ
+                        </span>
                     ) : null}
                 </div>
             </div>
@@ -124,10 +126,10 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    acceptRegisterAmbulance: (token, ambulanceId) =>
-        dispatch(acceptRegisterAmbulance(token, ambulanceId)),
-    rejectRegisterAmbulance: (token, ambulanceId, note) =>
-        dispatch(rejectRegisterAmbulance(token, ambulanceId, note)),
+    acceptRegisterAmbulance: (token, username, ambulanceId) =>
+        dispatch(acceptRegisterAmbulance(token, username, ambulanceId)),
+    rejectRegisterAmbulance: (token, username, ambulanceId, note) =>
+        dispatch(rejectRegisterAmbulance(token, username, ambulanceId, note)),
     clearItem: () => dispatch(clearItem())
 });
 

@@ -1,6 +1,6 @@
 export const grantPermission = (list, itemId) => {
     return list.map(item =>
-        item.itemId === itemId
+        item.id === itemId
             ? {
                   ...item,
                   status:
@@ -15,5 +15,5 @@ export const grantPermission = (list, itemId) => {
 };
 
 export const handleRegisterAmbulance = (list, ambulanceId, status) => {
-    return list.map(item => (item.itemId === ambulanceId ? { ...item, status } : item));
+    return list.map(item => (item.id === ambulanceId ? { ...item, status } : item));
 };

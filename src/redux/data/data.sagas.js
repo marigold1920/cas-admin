@@ -27,9 +27,9 @@ import {
 
 import DataActionTypes from "./data.types";
 
-function* fetchDataStart({ payload: { actor, token } }) {
+function* fetchDataStart({ payload: { actor, token, pageIndex, status, keyword } }) {
     try {
-        const response = yield call(fetchData, actor, token);
+        const response = yield call(fetchData, actor, token, pageIndex || 1, status, keyword || "");
 
         yield put(fetchDataSuccess(response.data));
     } catch (error) {
@@ -70,9 +70,10 @@ function* updateConfigurationsStart({ payload: { token, configurations } }) {
     }
 }
 
-function* acceptRegisterAmbulanceStart({ payload: { token, ambulanceId } }) {
+function* acceptRegisterAmbulanceStart({ payload: { token, username, ambulanceId } }) {
     try {
-        const response = yield call(acceptRegisterAmbulance, token, ambulanceId);
+        const response = yield call(acceptRegisterAmbulance, token, username, ambulanceId);
+        console.log(response.data);
 
         yield put(updateStatusCode(201));
         yield put(acceptRegisterAmbulanceSuccess(ambulanceId, response.data));
@@ -81,9 +82,9 @@ function* acceptRegisterAmbulanceStart({ payload: { token, ambulanceId } }) {
     }
 }
 
-function* rejectRegisterAmbulanceStart({ payload: { token, ambulanceId, note } }) {
+function* rejectRegisterAmbulanceStart({ payload: { token, username, ambulanceId, note } }) {
     try {
-        const response = yield call(rejectRegisterAmbulance, token, ambulanceId, note);
+        const response = yield call(rejectRegisterAmbulance, token, username, ambulanceId, note);
 
         yield put(rejectRegisterAmbulanceSuccess(ambulanceId, response.data));
         yield put(updateStatusCode(201));

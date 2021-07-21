@@ -1,11 +1,16 @@
 import DataActionTypes from "./data.types";
 
-export const fetchData = (actor, token) => ({
+export const fetchData = (actor, token, pageIndex, status, keyword) => ({
     type: DataActionTypes.FETCH_DATA_START,
-    payload: {
-        actor,
-        token
-    }
+    payload: { actor, token, pageIndex, status, keyword }
+});
+
+export const clearData = () => ({
+    type: DataActionTypes.CLEAR_DATA
+});
+
+export const toggleLoading = () => ({
+    type: DataActionTypes.TOGGLE_LOADING
 });
 
 export const fetchDataSuccess = data => ({
@@ -72,9 +77,9 @@ export const updateConfigurationsFail = error => ({
     payload: error
 });
 
-export const acceptRegisterAmbulance = (token, ambulanceId) => ({
+export const acceptRegisterAmbulance = (token, username, ambulanceId) => ({
     type: DataActionTypes.ACCEPT_REGISTER_AMBULANCE_START,
-    payload: { token, ambulanceId }
+    payload: { token, username, ambulanceId }
 });
 
 export const acceptRegisterAmbulanceSuccess = (ambulanceId, status) => ({
@@ -87,9 +92,9 @@ export const acceptRegisterAmbulanceFail = error => ({
     payload: error
 });
 
-export const rejectRegisterAmbulance = (token, ambulanceId, note) => ({
+export const rejectRegisterAmbulance = (token, username, ambulanceId, note) => ({
     type: DataActionTypes.REJECT_REGISTER_AMBULANCE_START,
-    payload: { token, ambulanceId, note }
+    payload: { token, username, ambulanceId, note }
 });
 
 export const rejectRegisterAmbulanceSuccess = (ambulanceId, status) => ({
