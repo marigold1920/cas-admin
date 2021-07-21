@@ -12,7 +12,7 @@ const RequestModal = ({ item }) => (
         <RequestOverview
             status={item.status.name}
             requestType={item.patientName ? "Đặt cho người khác" : "Đặt cho bản thân"}
-            transportType={item.emergency ? "Đi cấp cứu" : "Đi về nhà"}
+            transportType={item.isEmergency ? "Đến bệnh viện" : "Đi về nhà"}
         />
         <span className="content__title">Điểm đón, điểm nhận</span>
         <div className="position">
