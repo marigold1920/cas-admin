@@ -13,8 +13,8 @@ const RequestRow = ({
     driverName,
     driverImage,
     licensePlate,
-    typeRequest = "Đặt cho người khác",
-    typeTransport = "Đến bệnh viện",
+    isOther,
+    emergecy,
     status,
     viewDetails
 }) => (
@@ -39,7 +39,8 @@ const RequestRow = ({
             <span className="table__content__col col__7 noInfo">Đang cập nhật</span>
         )}
         <span className="table__content__col col__23">
-            {typeTransport} - {typeRequest}
+            {emergecy ? "Đến bệnh viện" : "Đi về nhà"} -{" "}
+            {isOther ? "Đặt cho người khác" : "Đặt cho bản thân"}
         </span>
         <span className="table__content__col col__13 status">
             {status ? (
